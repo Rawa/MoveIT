@@ -12,6 +12,7 @@ public class TimePreference extends DialogPreference {
     private int lastHour=0;
     private int lastMinute=0;
     private TimePicker picker=null;
+    private String time = "";
 
     public static int getHour(String time) {
         String[] pieces=time.split(":");
@@ -32,9 +33,13 @@ public class TimePreference extends DialogPreference {
         setNegativeButtonText("Cancel");
     }
 
+    public String getTime(){
+        return time;
+    }
     @Override
     protected View onCreateDialogView() {
         picker=new TimePicker(getContext());
+        picker.setIs24HourView(true);
 
         return(picker);
     }
@@ -55,7 +60,7 @@ public class TimePreference extends DialogPreference {
             lastHour=picker.getCurrentHour();
             lastMinute=picker.getCurrentMinute();
 
-            String time=String.valueOf(lastHour)+":"+String.valueOf(lastMinute);
+            time=String.valueOf(lastHour)+":"+String.valueOf(lastMinute);
 
             if (callChangeListener(time)) {
                 persistString(time);
@@ -63,16 +68,15 @@ public class TimePreference extends DialogPreference {
         }
     }
 
+
+
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-
         return(a.getString(index));
     }
 
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        String time=null;
-
         if (restoreValue) {
             if (defaultValue==null) {
                 time=getPersistedString("00:00");
