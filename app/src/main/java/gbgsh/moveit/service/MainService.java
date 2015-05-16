@@ -23,7 +23,7 @@ public class MainService extends IntentService implements  Runnable{
     private final Handler mHandler = new Handler();
     private StepCounterService mStepCounterService;
     private Database mDb;
-    private boolean notificationSent = false;
+    private boolean notificationSent = true;
 
     public MainService (){
         super("MainService");
