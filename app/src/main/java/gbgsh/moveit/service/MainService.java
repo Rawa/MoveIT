@@ -9,6 +9,8 @@ import gbgsh.moveit.datalayer.Database;
 
 public class MainService extends IntentService implements  Runnable{
 
+    public static final String UPDATE = "update";
+
     private static final String LOG_TAG = "MainService";
     private static final long TIMER_INTERVAL = 5000;
     private Integer mStep = 0;
@@ -46,6 +48,12 @@ public class MainService extends IntentService implements  Runnable{
         mHandler.postDelayed(this, 0);
     }
 
+    public void update() {
+        Intent intent = new Intent();
+        intent.setAction(MainService.UPDATE);
+        sendBroadcast(intent);
+    }
+
     @Override
     public void run() {
         if(oldStep != null) {
@@ -56,9 +64,12 @@ public class MainService extends IntentService implements  Runnable{
                 int total = mDb.getTotalSteps();
                 Log.d(LOG_TAG, "Steps taken since last time:" + numbSteps + "/" + total);
                 mDb.insert(numbSteps);
+
+                update();
             }
 
         }
+
         mHandler.postDelayed(this, TIMER_INTERVAL);
     }
 

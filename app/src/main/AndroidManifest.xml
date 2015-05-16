@@ -19,8 +19,13 @@
 
         <service
             android:name=".service.MainService"
-            android:exported="false">
+            android:exported="false" >
         </service>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>
