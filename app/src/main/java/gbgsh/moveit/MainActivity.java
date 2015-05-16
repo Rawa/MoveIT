@@ -1,11 +1,8 @@
 package gbgsh.moveit;
 
 import android.app.Activity;
-<<<<<<< HEAD
 import android.content.pm.ActivityInfo;
-=======
 import android.content.Intent;
->>>>>>> StepCounter etc
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
