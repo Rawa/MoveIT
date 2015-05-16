@@ -1,13 +1,14 @@
 package gbgsh.moveit;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import gbgsh.moveit.datalayer.Database;
 import gbgsh.moveit.stepcounter.StepCounterManager;
@@ -22,6 +23,7 @@ public class MainActivity extends Activity implements StepCounterManager.StepLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mStepCounter = new StepCounterManager(this);
         mStepCounter.setStepListener(this);
