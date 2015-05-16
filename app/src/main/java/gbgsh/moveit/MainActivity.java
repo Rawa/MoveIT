@@ -1,6 +1,7 @@
 package gbgsh.moveit;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+<<<<<<< HEAD
 import android.widget.TextView;
 import android.graphics.RectF;
 import android.support.v7.app.ActionBarActivity;
@@ -24,15 +26,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.LinearLayout;
 
+=======
+>>>>>>> b69070851216214f1a2a917fdeb67979f35cb7bd
 
 import gbgsh.moveit.datalayer.Database;
-import gbgsh.moveit.stepcounter.StepCounterManager;
+import gbgsh.moveit.service.MainService;
 
 
-public class MainActivity extends Activity implements StepCounterManager.StepListener {
+public class MainActivity extends Activity {
 
-    private StepCounterManager mStepCounter;
     private Database mDb;
+
+    private static final String LOG_TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +45,10 @@ public class MainActivity extends Activity implements StepCounterManager.StepLis
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        mStepCounter = new StepCounterManager(this);
-        mStepCounter.setStepListener(this);
+        Intent mainServiceIntent = new Intent(this, MainService.class);
+        this.startService(mainServiceIntent);
 
         mDb = new Database(getApplicationContext());
-        mDb.insert(123);
 
         Button high = (Button) findViewById(R.id.high);
         Button low = (Button) findViewById(R.id.low);
@@ -54,16 +58,17 @@ public class MainActivity extends Activity implements StepCounterManager.StepLis
         high.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bar.setBarLevel(0.8f);
-                Log.d("derp", "high");
+                bar.setBarLevel(0.8f, true);
+                Log.d(LOG_TAG, "high");
                 bar.restartPulse();
+
             }
         });
         low.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bar.setBarLevel(0.4f);
-                Log.d("derp", "low");
+                bar.setBarLevel(0.4f, true);
+                Log.d(LOG_TAG, "low");
                 bar.restartPulse();
             }
         });
@@ -109,6 +114,7 @@ public class MainActivity extends Activity implements StepCounterManager.StepLis
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onRecieveStep(int step) {
