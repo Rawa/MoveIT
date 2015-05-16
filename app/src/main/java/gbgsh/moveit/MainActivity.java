@@ -1,38 +1,38 @@
 package gbgsh.moveit;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.graphics.RectF;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
-import android.view.Menu;
-import android.widget.LinearLayout;
-
 
 import gbgsh.moveit.datalayer.Database;
 import gbgsh.moveit.service.MainService;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements Runnable {
+
+    private static final int THRESHOLD_TIME_MINUTES = 1;
+    private static final int THRESHOLD_MAX_STEPS = 100;
 
     private Database mDb;
+    private StepBar bar;
+
+    public Handler handler = new Handler();
+    private int oldLatestStep = 0;
 
     private static final String LOG_TAG = "MainActivity";
 
@@ -45,12 +45,21 @@ public class MainActivity extends Activity {
         Intent mainServiceIntent = new Intent(this, MainService.class);
         this.startService(mainServiceIntent);
 
+        IntentFilter intentFilter = new IntentFilter(MainService.UPDATE);
+        this.registerReceiver(new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                updateBar();
+            }
+        }, intentFilter);
+
         mDb = new Database(getApplicationContext());
 
         Button high = (Button) findViewById(R.id.high);
         Button low = (Button) findViewById(R.id.low);
 
-        final StepBar bar = (StepBar) findViewById(R.id.stepbar);
+        bar = (StepBar) findViewById(R.id.stepbar);
 
         high.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +78,7 @@ public class MainActivity extends Activity {
                 bar.restartPulse();
             }
         });
+
         /*
         Paint paint = new Paint();
         Bitmap bg = Bitmap.createBitmap(480, 800, Bitmap.Config.ARGB_8888);
@@ -88,6 +98,28 @@ public class MainActivity extends Activity {
         LinearLayout ll = (LinearLayout) findViewById(R.id.rect);
         ll.setBackgroundDrawable(new BitmapDrawable(bg));
         */
+
+        handler.postDelayed(this, 0);
+    }
+
+    @Override
+    public void run() {
+        updateBar();
+        handler.postDelayed(this, 1000);
+    }
+
+    public void updateBar() {
+        int latest = mDb.getLatestSteps(THRESHOLD_TIME_MINUTES);
+        if(latest != oldLatestStep) {
+            Log.d(LOG_TAG, "Latest steps: " + latest);
+
+            float level = Math.min((float)latest / (float) THRESHOLD_MAX_STEPS, 1.0f);
+            Log.d(LOG_TAG, "Level set to: " + level);
+
+            bar.setBarLevel(level, true);
+        }
+
+        oldLatestStep = latest;
     }
 
     @Override
