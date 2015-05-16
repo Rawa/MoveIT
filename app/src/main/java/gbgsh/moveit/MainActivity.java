@@ -147,7 +147,7 @@ public class MainActivity extends Activity implements Runnable {
         Paint paint = new Paint();
         Bitmap bg = Bitmap.createBitmap(240, 800, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bg);
-        createSmily(canvas, paint, 0, 110, 5, Math.round(level * 100.0f));
+        createSmily(canvas, paint, 10, 0, 4, Math.round(level * 100.0f));
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.smily);
         ll.setBackgroundDrawable(new BitmapDrawable(bg));
