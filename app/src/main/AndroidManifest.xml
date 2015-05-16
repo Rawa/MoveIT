@@ -19,14 +19,6 @@
 
         <service
             android:name=".service.MainService"
-            android:exported="false">
-            <action android:name="update" />
-            android:name=".stepcounter.StepCounterService"
-            android:exported="false" >
-            <action android:name="step.count" />
-        </service>
-        <service
-            android:name=".service.MainService"
             android:exported="false" >
         </service>
 
