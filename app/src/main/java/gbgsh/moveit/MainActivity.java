@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-<<<<<<< HEAD
 import android.widget.TextView;
 import android.graphics.RectF;
 import android.support.v7.app.ActionBarActivity;
@@ -26,8 +25,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.LinearLayout;
 
-=======
->>>>>>> b69070851216214f1a2a917fdeb67979f35cb7bd
 
 import gbgsh.moveit.datalayer.Database;
 import gbgsh.moveit.service.MainService;
@@ -115,8 +112,6 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    @Override
     public void onRecieveStep(int step) {
         TextView stepLabel = (TextView) findViewById(R.id.step);
         stepLabel.setText("Steps: " + step);
