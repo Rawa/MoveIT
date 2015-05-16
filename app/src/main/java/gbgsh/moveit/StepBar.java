@@ -51,7 +51,7 @@ public class StepBar extends LinearLayout {
         base = (RelativeLayout) this.findViewById(R.id.base);
         bar = (LinearLayout) this.findViewById(R.id.bar);
         previousColor = getBarRandColor();
-        startPulse();
+        //startPulse();
     }
 
     public float getBarLevel(){
@@ -116,7 +116,7 @@ public class StepBar extends LinearLayout {
      */
     private void animateBarHeight(float to) {
         final int goalHeight = (int)(base.getHeight() * to);
-        final int currentHeight = bar.getLayoutParams().height;
+        final int currentHeight = base.getHeight() - bar.getLayoutParams().height;
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -126,7 +126,7 @@ public class StepBar extends LinearLayout {
                     public void onAnimationUpdate(ValueAnimator valueAnimator) {
                         int val = (Integer) valueAnimator.getAnimatedValue();
                         ViewGroup.LayoutParams layoutParams = bar.getLayoutParams();
-                        layoutParams.height = val;
+                        layoutParams.height = base.getHeight() - val;
                         bar.setLayoutParams(layoutParams);
                         //restartPulse(); // Causes flickering on frequent updates...
                     }

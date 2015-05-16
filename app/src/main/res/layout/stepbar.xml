@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:elevation="10dp"
-    android:background="@color/material_blue_grey_800"
+    android:background="@drawable/gradiant_stepbar"
     android:id="@+id/base">
 
     <!--
@@ -16,9 +16,9 @@
     <LinearLayout
         android:id="@+id/bar"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="false"
         android:layout_height="20dp"
-        android:background="#00FF00"
+        android:background="#CCCCCC"
         android:orientation="vertical"></LinearLayout>
 
 
