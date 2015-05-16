@@ -81,20 +81,20 @@ public class SettingsActivity extends PreferenceActivity {
             // Set seekbar summary :
 
 
-            String from = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString(FROM_KEY, "DERP");
+            String from = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString(FROM_KEY, "08:00");
             fromPref.setSummary(this.getString(R.string.pref_from_summary).replace("$1", from));
 
-            String to = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString(TO_KEY, "DERP");
+            String to = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString(TO_KEY, "17:00");
             toPref.setSummary(this.getString(R.string.pref_to_summary).replace("$1", to));
         }
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if(key.equals(FROM_KEY)) {
-                String from_time = sharedPreferences.getString(FROM_KEY, "");
+                String from_time = sharedPreferences.getString(FROM_KEY, "08:00");
                 fromPref.setSummary(this.getString(R.string.pref_from_summary).replace("$1",from_time));
             } else if(key.equals(TO_KEY)) {
-                String to_time = sharedPreferences.getString(TO_KEY, "");
+                String to_time = sharedPreferences.getString(TO_KEY, "17:00");
                 toPref.setSummary(this.getString(R.string.pref_to_summary).replace("$1",to_time));
 
             }
