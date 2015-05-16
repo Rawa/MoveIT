@@ -2,6 +2,7 @@ package gbgsh.moveit;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
@@ -84,12 +85,47 @@ public class StepBar extends LinearLayout {
      *
      * @param level Float between 0-1f
     */
-    public void setBarLevel(float level){
+    public void setBarLevel(float level, boolean animate){
+        if(animate) {
+            animateBarHeight(level);
+            return;
+        }
+
         int baseHeight = base.getHeight();
         ViewGroup.LayoutParams params = bar.getLayoutParams();
         params.height = (int) (baseHeight*level);
         bar.setLayoutParams(params);
     }
+
+    /**
+     * Animate the height of the StepBar from the current value to the supplied.
+     * @param to Move the bar to this level
+     */
+    private void animateBarHeight(float to) {
+        final int goalHeight = (int)(base.getHeight() * to);
+        final int currentHeight = bar.getLayoutParams().height;
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                ValueAnimator anim = ValueAnimator.ofInt(currentHeight, goalHeight);
+                anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                        int val = (Integer) valueAnimator.getAnimatedValue();
+                        ViewGroup.LayoutParams layoutParams = bar.getLayoutParams();
+                        layoutParams.height = val;
+                        bar.setLayoutParams(layoutParams);
+                        restartPulse();
+                    }
+                });
+                anim.setDuration(200);
+                anim.start();
+            }
+        };
+        Log.d("Derpy", "Starting animation");
+        post(runnable);
+    }
+
     private void startPulse() {
 
         final Runnable runnable = new Runnable() {
