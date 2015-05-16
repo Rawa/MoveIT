@@ -67,6 +67,8 @@ public class StepBar extends LinearLayout {
     }
 
     private int applyRandDiff(int color, int diff){
+        color = Math.min(255, color);
+        color = Math.max(0, color);
         color += getRandDiff(diff);
         color = Math.min(255, color);
         color = Math.max(0, color);
