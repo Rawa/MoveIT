@@ -128,10 +128,10 @@ public class StepBar extends LinearLayout {
                         ViewGroup.LayoutParams layoutParams = bar.getLayoutParams();
                         layoutParams.height = val;
                         bar.setLayoutParams(layoutParams);
-                        restartPulse();
+                        //restartPulse(); // Causes flickering on frequent updates...
                     }
                 });
-                anim.setDuration(200);
+                anim.setDuration(500);
                 anim.start();
             }
         };
