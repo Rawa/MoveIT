@@ -2,9 +2,12 @@ package gbgsh.moveit;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
 
 
 public class MainActivity extends Activity implements StepCounterManager.StepListener {
@@ -18,6 +21,25 @@ public class MainActivity extends Activity implements StepCounterManager.StepLis
 
         mStepCounter = new StepCounterManager(this);
         mStepCounter.setStepListener(this);
+        Button high = (Button) findViewById(R.id.high);
+        Button low = (Button) findViewById(R.id.low);
+
+        final StepBar bar = (StepBar) findViewById(R.id.stepbar);
+
+        high.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bar.setBarLevel(0.8f);
+                Log.d("derp", "high");
+            }
+        });
+        low.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bar.setBarLevel(0.4f);
+                Log.d("derp", "low");
+            }
+        });
     }
 
     @Override
