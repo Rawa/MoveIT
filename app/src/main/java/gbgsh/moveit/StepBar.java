@@ -5,12 +5,12 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
-import android.net.wifi.WifiManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.Random;
 
@@ -18,7 +18,7 @@ import java.util.Random;
  * Created by rawa on 2015-05-16.
  */
 public class StepBar extends LinearLayout {
-    private LinearLayout base;
+    private RelativeLayout base;
     private LinearLayout bar;
 
     private int previousColor;
@@ -48,7 +48,7 @@ public class StepBar extends LinearLayout {
     private void init(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         inflate(context, R.layout.stepbar, this);
-        base = (LinearLayout) this.findViewById(R.id.base);
+        base = (RelativeLayout) this.findViewById(R.id.base);
         bar = (LinearLayout) this.findViewById(R.id.bar);
         previousColor = getBarRandColor();
         startPulse();
@@ -70,7 +70,7 @@ public class StepBar extends LinearLayout {
         color += getRandDiff(diff);
         color = Math.min(255, color);
         color = Math.max(0, color);
-        Log.d("COLOR", color+ "");
+        Log.d("COLOR", color + "");
         return color;
     }
 
