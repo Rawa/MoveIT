@@ -75,9 +75,22 @@ public class StepBar extends LinearLayout {
     }
 
     private int getBarRandColor(){
-        int green = applyRandDiff((int) (getBarLevel()*255), 20);
-        int red = 255 - applyRandDiff((int) (getBarLevel()*255), 20);
+        float level = getBarLevel();
+        int green;
+        int red;
+        if(level > .5f){
+            green = applyRandDiff(255, 20);
+            red = 255 - applyRandDiff((int) (2*(getBarLevel()-0.5f) * 255), 20);
+        } else {
+            green = applyRandDiff((int) (2*getBarLevel()*255), 20);
+            red = applyRandDiff(255, 20);
+        }
         int blue = applyRandDiff(20, 10);
+        Log.d("TAG", "FLOOAT MOTTHAFAKAA= " + getBarLevel());
+        Log.d("TAG", "Red: " + red);
+        Log.d("TAG", "Green: " + green);
+        Log.d("TAG", "Blue: " + blue);
+
         return Color.rgb(red, green, blue);
     }
 

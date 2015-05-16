@@ -35,6 +35,7 @@ public class MainActivity extends Activity implements Runnable {
     private int oldLatestStep = 0;
 
     private static final String LOG_TAG = "MainActivity";
+    float barLevel = 0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,8 @@ public class MainActivity extends Activity implements Runnable {
         high.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bar.setBarLevel(0.8f, true);
+                barLevel += 0.1f;
+                bar.setBarLevel(barLevel, true);
                 Log.d(LOG_TAG, "high");
                 bar.restartPulse();
 
@@ -73,7 +75,8 @@ public class MainActivity extends Activity implements Runnable {
         low.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bar.setBarLevel(0.4f, true);
+                barLevel -= 0.1f;
+                bar.setBarLevel(barLevel, true);
                 Log.d(LOG_TAG, "low");
                 bar.restartPulse();
             }
@@ -138,6 +141,8 @@ public class MainActivity extends Activity implements Runnable {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivity(i);
             return true;
         }
 
