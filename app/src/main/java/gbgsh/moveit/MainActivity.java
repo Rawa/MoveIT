@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
 
     private Database mDb;
 
-    private static final String LOG_TAG = "MAINACTIVITY";
+    private static final String LOG_TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
         high.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bar.setBarLevel(0.8f);
+                bar.setBarLevel(0.8f, true);
                 Log.d(LOG_TAG, "high");
                 bar.restartPulse();
 
@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
         low.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bar.setBarLevel(0.4f);
+                bar.setBarLevel(0.4f, true);
                 Log.d(LOG_TAG, "low");
                 bar.restartPulse();
             }
