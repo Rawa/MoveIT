@@ -10,5 +10,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <gbgsh.moveit.StepBar
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:id="@+id/stepbar" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="High"
+        android:id="@+id/high"
+        android:layout_alignTop="@+id/stepbar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="49dp"
+        android:layout_marginTop="23dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Low"
+        android:id="@+id/low"
+        android:layout_below="@+id/high"
+        android:layout_alignStart="@+id/high"
+        android:layout_marginTop="33dp" />
+
 
 </RelativeLayout>
