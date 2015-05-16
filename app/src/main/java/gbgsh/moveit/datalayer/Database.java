@@ -4,9 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Database {
 
+    private static final String LOG_TAG = "Database";
     private DatabaseHelper dbHelper;
     private SQLiteDatabase database;
 
@@ -28,9 +30,10 @@ public class Database {
     }
 
     private int executeCountQuery(String query, String column) {
+        Log.d(LOG_TAG, "Executing sql query: " + query);
         Cursor cursor = database.rawQuery(query, null);
-        cursor.moveToFirst();
         if (cursor.getCount() > 0) {
+            cursor.move(cursor.getCount());
             return cursor.getInt(cursor.getColumnIndex(column));
         }
 
