@@ -61,5 +61,5 @@ public class MainService extends IntentService implements  Runnable{
         oldStep = mStep;
         Log.d(LOG_TAG, "TIMER TRIGGERED");
     }
-    
+
 }
