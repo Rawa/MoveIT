@@ -31,7 +31,7 @@ public class Database {
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
-            return cursor.getInt(cursor.getColumnIndex("the_sum"));
+            return cursor.getInt(cursor.getColumnIndex(column));
         }
 
         cursor.close();
