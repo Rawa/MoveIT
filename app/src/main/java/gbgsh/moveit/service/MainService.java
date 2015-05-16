@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import gbgsh.moveit.MainActivity;
+import gbgsh.moveit.R;
 import gbgsh.moveit.datalayer.Database;
 
 public class MainService extends IntentService implements  Runnable{
@@ -95,10 +96,11 @@ public class MainService extends IntentService implements  Runnable{
                 PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 Notification notification = new Notification.Builder(this)
-                        .setContentTitle("Move that ass! You have walked less than " + latest + " steps since " + MainActivity.THRESHOLD_TIME_MINUTES + " minute(s)")
+                        .setContentTitle("You have to move it!")
                         .setContentText("MoveIT")
-                                //.setSmallIcon(R.drawable.icon)
+                        .setSmallIcon(R.drawable.ic_stat_movieit_icon)
                         .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
+                        .setAutoCancel(true)
                         .setContentIntent(contentIntent).build();
 
 
