@@ -94,6 +94,8 @@ public class MainActivity extends Activity implements Runnable {
         });
         */
         /*Paint paint = new Paint();
+
+        Paint paint = new Paint();
         Bitmap bg = Bitmap.createBitmap(240, 800, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bg);
         createSmily(canvas,paint,0,20,5,0);
