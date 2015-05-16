@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -22,6 +21,8 @@ public class StepBar extends LinearLayout {
     private int nextColor;
     private int from;
     private static final int FREQUENCY = 1500;
+
+    private Object waitersGonna = new Object();
 
     public StepBar(Context context) {
         super(context);
@@ -93,16 +94,27 @@ public class StepBar extends LinearLayout {
         start(runnable);
     }
 
+    /**
+     * Notify and restart the thread that runs the color pulse
+     */
+    public void restartPulse() {
+        synchronized (waitersGonna) {
+            waitersGonna.notify();
+        }
+    }
+
     private void start(final Runnable runnable){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
-                    try {
-                        post(runnable);
-                        Thread.sleep(FREQUENCY);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                synchronized (waitersGonna) {
+                    while (true) {
+                        try {
+                            post(runnable);
+                            waitersGonna.wait(FREQUENCY);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

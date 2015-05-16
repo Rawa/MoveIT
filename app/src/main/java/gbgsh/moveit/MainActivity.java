@@ -41,6 +41,7 @@ public class MainActivity extends Activity implements StepCounterManager.StepLis
             public void onClick(View v) {
                 bar.setBarLevel(0.8f);
                 Log.d("derp", "high");
+                bar.restartPulse();
             }
         });
         low.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +49,7 @@ public class MainActivity extends Activity implements StepCounterManager.StepLis
             public void onClick(View v) {
                 bar.setBarLevel(0.4f);
                 Log.d("derp", "low");
+                bar.restartPulse();
             }
         });
     }
