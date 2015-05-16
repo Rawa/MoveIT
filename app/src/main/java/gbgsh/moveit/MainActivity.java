@@ -66,12 +66,12 @@ public class MainActivity extends Activity implements Runnable {
 
         mDb = new Database(getApplicationContext());
 
-        Button high = (Button) findViewById(R.id.high);
-        Button low = (Button) findViewById(R.id.low);
+     //   Button high = (Button) findViewById(R.id.high);
+     //   Button low = (Button) findViewById(R.id.low);
 
         bar = (StepBar) findViewById(R.id.stepbar);
 
-        high.setOnClickListener(new View.OnClickListener() {
+/*        high.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 barLevel += 0.1f;
@@ -89,8 +89,8 @@ public class MainActivity extends Activity implements Runnable {
                 Log.d(LOG_TAG, "low");
                 bar.restartPulse();
             }
-        });
 
+        });
         /*
         Paint paint = new Paint();
         Bitmap bg = Bitmap.createBitmap(480, 800, Bitmap.Config.ARGB_8888);
@@ -111,7 +111,8 @@ public class MainActivity extends Activity implements Runnable {
         ll.setBackgroundDrawable(new BitmapDrawable(bg));
         */
 
-        //handler.postDelayed(this, 0);
+
+//        handler.postDelayed(this, 0);
         updateBar();
     }
 
@@ -167,10 +168,6 @@ public class MainActivity extends Activity implements Runnable {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onRecieveStep(int step) {
-        TextView stepLabel = (TextView) findViewById(R.id.step);
-        stepLabel.setText("Steps: " + step);
-    }
     //happyness 0-100
     //width nummber of times bigger standard 1
     private void createSmily(Canvas canvas,Paint paint,int x,int y,int scale,int happyness){
