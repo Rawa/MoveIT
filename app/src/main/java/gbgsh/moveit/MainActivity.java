@@ -57,8 +57,8 @@ public class MainActivity extends Activity implements Runnable {
 
         mDb = new Database(getApplicationContext());
 
-        Button high = (Button) findViewById(R.id.high);
-        Button low = (Button) findViewById(R.id.low);
+     //   Button high = (Button) findViewById(R.id.high);
+     //   Button low = (Button) findViewById(R.id.low);
 
         bar = (StepBar) findViewById(R.id.stepbar);
 
