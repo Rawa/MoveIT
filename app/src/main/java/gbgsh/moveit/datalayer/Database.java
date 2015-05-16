@@ -49,7 +49,7 @@ public class Database {
         return executeCountQuery(query, "the_sum");
     }
 
-    public int getLatestSteps(int intervalMinutes) {
+    public int getLatestSteps(long intervalMinutes) {
         long before = Math.max(System.currentTimeMillis() - intervalMinutes * 60 * 1000, 0);
         String query = "SELECT SUM(count) AS the_sum FROM step WHERE timestamp > " + before + " LIMIT 1";
         return executeCountQuery(query, "the_sum");
