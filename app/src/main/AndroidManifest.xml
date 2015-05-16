@@ -19,7 +19,10 @@
 
         <service
             android:name=".StepCounterService"
-            android:exported="false" />
+            android:exported="false">
+
+            <action android:name="step.count" />
+        </service>
     </application>
 
 </manifest>

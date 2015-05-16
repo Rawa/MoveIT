@@ -11,6 +11,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class StepCounterService extends IntentService implements SensorEventListener {
+    public static final String STEP_COUNT = "step.count";
+    public static final String STEP = "step";
+
     private SensorManager mSensorManager;
 
     public StepCounterService() {
@@ -31,6 +34,11 @@ public class StepCounterService extends IntentService implements SensorEventList
     @Override
     public void onSensorChanged(SensorEvent event) {
         Log.d("step", String.valueOf(event.values[0]));
+
+        Intent intent = new Intent();
+        intent.setAction(STEP_COUNT);
+        intent.putExtra(STEP, Math.round(event.values[0]));
+        sendBroadcast(intent);
     }
 
     @Override

@@ -1,21 +1,23 @@
 package gbgsh.moveit;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements StepCounterManager.StepListener {
+
+    private StepCounterManager mStepCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, StepCounterService.class);
-        startService(intent);
+        mStepCounter = new StepCounterManager(this);
+        mStepCounter.setStepListener(this);
     }
 
     @Override
@@ -38,5 +40,11 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRecieveStep(int step) {
+        TextView stepLabel = (TextView) findViewById(R.id.step);
+        stepLabel.setText("Steps: " + step);
     }
 }
