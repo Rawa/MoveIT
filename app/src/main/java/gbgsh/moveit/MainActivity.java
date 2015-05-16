@@ -138,8 +138,10 @@ public class MainActivity extends Activity implements Runnable {
                 notificationSent = true;
                 Log.d(LOG_TAG, "Sending notification");
 
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                PendingIntent contentIntent = PendingIntent.getActivity(getBaseContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                Intent intent = new Intent(MainActivity.this, UserSettingActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+                PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 Notification notification = new Notification.Builder(this)
                         .setContentTitle("Move that ass! You have walked less than " + latest + " steps since " + THRESHOLD_TIME_MINUTES + " minute(s)")
