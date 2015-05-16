@@ -10,7 +10,7 @@ public class UserSettingActivity extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  addPreferencesFromResource(R.xml.prefs);
+     //  addPreferencesFromResource(R.values.prefs);
     }
 
 }

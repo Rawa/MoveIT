@@ -3,4 +3,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="pref_rest_limit">Time rest settings</string>
+    <string name="pref_title_threshold">Step threshold</string>
 </resources>
