@@ -50,7 +50,7 @@ public class StepBar extends LinearLayout {
         inflate(context, R.layout.stepbar, this);
         base = (LinearLayout) this.findViewById(R.id.base);
         bar = (LinearLayout) this.findViewById(R.id.bar);
-        previousColor = getBarRandLevelColor();
+        previousColor = getBarRandColor();
         startPulse();
     }
 
