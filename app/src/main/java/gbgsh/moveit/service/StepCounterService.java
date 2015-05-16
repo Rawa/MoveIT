@@ -1,46 +1,47 @@
-package gbgsh.moveit.stepcounter;
+package gbgsh.moveit.service;
 
-import android.app.IntentService;
+import android.app.Service;
 import android.content.Context;
-import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
-import android.widget.Toast;
 
-public class StepCounterService extends IntentService implements SensorEventListener {
-    public static final String STEP_COUNT = "step.count";
-    public static final String STEP = "step";
+public class StepCounterService implements SensorEventListener {
     private static final String LOG_TAG = "StepCounterService";
 
     private SensorManager mSensorManager;
+    private StepListener mListener;
 
-    public StepCounterService() {
-        super("StepCounter");
+    public interface StepListener {
+        public void onRecieveStep(int step);
     }
 
-    @Override
-    protected void onHandleIntent(Intent workIntent) {
+    public StepCounterService(Service service) {
         Log.d(LOG_TAG, "Starting");
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        mSensorManager = (SensorManager) service.getSystemService(Context.SENSOR_SERVICE);
         Sensor countSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         if (countSensor != null) {
             mSensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
         } else {
-            Toast.makeText(this, "Count sensor not available!", Toast.LENGTH_LONG).show();
+            Log.d(LOG_TAG, "Count sensor not available!");
         }
+    }
+
+    public void setStepListener(StepListener listener) {
+        mListener = listener;
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
         Log.d(LOG_TAG, String.valueOf(event.values[0]));
 
-        Intent intent = new Intent();
-        intent.setAction(STEP_COUNT);
-        intent.putExtra(STEP, Math.round(event.values[0]));
-        sendBroadcast(intent);
+        int steps = Math.round(event.values[0]);
+        if(mListener != null) {
+            mListener.onRecieveStep(steps);
+        }
     }
 
     @Override
