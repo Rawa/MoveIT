@@ -5,9 +5,12 @@
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
     <gbgsh.moveit.TimePreference
         android:key="timePrefA_Key"
-        android:title="@string/pref_from"/>
+        android:title="@string/pref_from"
+        android:summary="@string/pref_from_desc"
+        />
     <gbgsh.moveit.TimePreference
-        android:key="timePrefA_Key"
-        android:title="@string/pref_to"/>
+        android:key="timePrefB_Key"
+        android:title="@string/pref_to"
+        android:summary="@string/pref_to_desc"/>
 
 </PreferenceScreen>
