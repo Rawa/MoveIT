@@ -32,12 +32,14 @@ public class Database {
     private int executeCountQuery(String query, String column) {
         Log.d(LOG_TAG, "Executing sql query: " + query);
         Cursor cursor = database.rawQuery(query, null);
-        if (cursor.getCount() > 0) {
-            cursor.move(cursor.getCount());
-            return cursor.getInt(cursor.getColumnIndex(column));
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.move(cursor.getCount());
+                return cursor.getInt(cursor.getColumnIndex(column));
+            }
+        } finally {
+            cursor.close();
         }
-
-        cursor.close();
 
         return 0;
     }
