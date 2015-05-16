@@ -12,7 +12,7 @@ public class MainService extends IntentService implements  Runnable{
     public static final String UPDATE = "update";
 
     private static final String LOG_TAG = "MainService";
-    private static final long TIMER_INTERVAL = 5000;
+    private static final long TIMER_INTERVAL = 1000;
     private Integer mStep = 0;
     private Integer oldStep;
     private final Handler mHandler = new Handler();
