@@ -1,7 +1,11 @@
 package gbgsh.moveit;
 
 import android.app.Activity;
+<<<<<<< HEAD
 import android.content.pm.ActivityInfo;
+=======
+import android.content.Intent;
+>>>>>>> StepCounter etc
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,13 +15,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import gbgsh.moveit.datalayer.Database;
+import gbgsh.moveit.service.MainService;
 import gbgsh.moveit.stepcounter.StepCounterManager;
 
 
 public class MainActivity extends Activity implements StepCounterManager.StepListener {
 
-    private StepCounterManager mStepCounter;
     private Database mDb;
+
+    private static final String LOG_TAG = "MAINACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +31,9 @@ public class MainActivity extends Activity implements StepCounterManager.StepLis
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        mStepCounter = new StepCounterManager(this);
-        mStepCounter.setStepListener(this);
+        Intent mainServiceIntent = new Intent(this, MainService.class);
+        this.startService(mainServiceIntent);
+
 
         mDb = new Database(getApplicationContext());
         mDb.insert(123);
@@ -40,15 +47,16 @@ public class MainActivity extends Activity implements StepCounterManager.StepLis
             @Override
             public void onClick(View v) {
                 bar.setBarLevel(0.8f);
-                Log.d("derp", "high");
+                Log.d(LOG_TAG, "high");
                 bar.restartPulse();
+
             }
         });
         low.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bar.setBarLevel(0.4f);
-                Log.d("derp", "low");
+                Log.d(LOG_TAG, "low");
                 bar.restartPulse();
             }
         });
