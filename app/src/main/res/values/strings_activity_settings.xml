@@ -10,6 +10,7 @@
     <string name="pref_to_summary">Stops annoying you at $1</string>
     <string name="pref_time_interval">Set the time interval of MoveIT</string>
 
+    <string name="pref_rest_limit">Sedentary limitations</string>
 
     <string name="pref_title_sendentary_time">Sedentary time before warning</string>
     <string-array name="pref_sendentary_text">
@@ -27,7 +28,8 @@
         <item>360</item>
     </string-array>
 
-    <string name="pref_title_step_threshold">Movement threshold time</string>
+    <string name="pref_title_threshold">Step threshold</string>
+    <string name="pref_title_step_threshold">Movement threshold</string>
     <string-array name="pref_step_threshold_text">
         <item>50 steps</item>
         <item>100 steps</item>
