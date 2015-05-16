@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
 
         final StepBar bar = (StepBar) findViewById(R.id.stepbar);
 
-        high.setOnClickListener(new View.OnClickListener() {
+/*        high.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bar.setBarLevel(0.8f, true);
@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
                 Log.d(LOG_TAG, "low");
                 bar.restartPulse();
             }
-        });
+        });*/
         /*
         Paint paint = new Paint();
         Bitmap bg = Bitmap.createBitmap(480, 800, Bitmap.Config.ARGB_8888);
@@ -88,6 +88,7 @@ public class MainActivity extends Activity {
         LinearLayout ll = (LinearLayout) findViewById(R.id.rect);
         ll.setBackgroundDrawable(new BitmapDrawable(bg));
         */
+
     }
 
     @Override
@@ -112,10 +113,6 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onRecieveStep(int step) {
-        TextView stepLabel = (TextView) findViewById(R.id.step);
-        stepLabel.setText("Steps: " + step);
-    }
     //happyness 0-100
     //width nummber of times bigger standard 1
     private void createSmily(Canvas canvas,Paint paint,int x,int y,int scale,int happyness){
