@@ -28,7 +28,8 @@
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/linearLayout">
 
             <TextView
                 android:text="Statistics"
@@ -105,6 +106,7 @@
 
             </LinearLayout>
 
+
         </LinearLayout>
 
         <gbgsh.moveit.StepBar
@@ -132,6 +134,24 @@
             android:layout_alignStart="@+id/high"
             android:layout_marginTop="33dp"
             android:visibility="invisible" />
+
+
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="260dp"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:id="@+id/smily"
+            android:background="@color/accent_material_light"
+            android:layout_below="@+id/high"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/linearLayout"
+            android:layout_alignStart="@+id/high">
+
+
+
+        </LinearLayout>
 
     </RelativeLayout>
 

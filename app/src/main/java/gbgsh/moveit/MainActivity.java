@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import gbgsh.moveit.datalayer.Database;
@@ -91,25 +94,26 @@ public class MainActivity extends Activity implements Runnable {
             }
         });
 
-        /*
+
         Paint paint = new Paint();
-        Bitmap bg = Bitmap.createBitmap(480, 800, Bitmap.Config.ARGB_8888);
+        Bitmap bg = Bitmap.createBitmap(240, 800, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bg);
-        createSmily(canvas,paint,0,0,2,0);
-        createSmily(canvas,paint,0,50,2,10);
-        createSmily(canvas,paint,0,100,2,20);
-        createSmily(canvas, paint, 0, 150, 2, 30);
-        createSmily(canvas, paint, 0, 200, 2, 40);
+        createSmily(canvas,paint,0,20,5,0);
+        createSmily(canvas,paint,0,65,5,50);
+        createSmily(canvas,paint,0,110,5,100);
+
+        /*createSmily(canvas,paint,100,50,5,10);
+        createSmily(canvas,paint,100,100,5,20);
         createSmily(canvas, paint, 0, 250, 2, 50);
         createSmily(canvas, paint, 0, 300, 2, 60);
         createSmily(canvas, paint, 0, 350, 2, 70);
         createSmily(canvas, paint, 0, 400, 2, 80);
         createSmily(canvas, paint, 0, 450, 2, 90);
-        createSmily(canvas, paint, 0, 500, 2, 100);
+        createSmily(canvas, paint, 0, 500, 2, 100);*/
 
-        LinearLayout ll = (LinearLayout) findViewById(R.id.rect);
+        LinearLayout ll = (LinearLayout) findViewById(R.id.smily);
         ll.setBackgroundDrawable(new BitmapDrawable(bg));
-        */
+
 
         //handler.postDelayed(this, 0);
         updateBar();
