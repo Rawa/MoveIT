@@ -1,9 +1,6 @@
 package gbgsh.moveit;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,9 +25,9 @@ import gbgsh.moveit.service.MainService;
 
 public class MainActivity extends Activity implements Runnable {
 
-    private static final int THRESHOLD_TIME_MINUTES = 1;
-    private static final int THRESHOLD_MAX_STEPS = 100;
-    private static final float NOTIFICATION_THRESHOLD = 0.1f;
+    public static final int THRESHOLD_TIME_MINUTES = 1;
+    public static final int THRESHOLD_MAX_STEPS = 100;
+    public static final float NOTIFICATION_THRESHOLD = 0.1f;
 
     private Database mDb;
     private StepBar bar;
@@ -107,7 +104,7 @@ public class MainActivity extends Activity implements Runnable {
         ll.setBackgroundDrawable(new BitmapDrawable(bg));
         */
 
-        handler.postDelayed(this, 0);
+        //handler.postDelayed(this, 0);
         updateBar();
     }
 
@@ -125,39 +122,10 @@ public class MainActivity extends Activity implements Runnable {
             float level = Math.min((float)latest / (float) THRESHOLD_MAX_STEPS, 1.0f);
             Log.d(LOG_TAG, "Level set to: " + level);
 
-            sendNotification(level, latest);
             bar.setBarLevel(level, true);
         }
 
         oldLatestStep = latest;
-    }
-
-    public void sendNotification(float level, int latest) {
-        if(level <= NOTIFICATION_THRESHOLD) {
-            if(!notificationSent) {
-                notificationSent = true;
-                Log.d(LOG_TAG, "Sending notification");
-
-                Intent intent = new Intent(MainActivity.this, UserSettingActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-                PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                Notification notification = new Notification.Builder(this)
-                        .setContentTitle("Move that ass! You have walked less than " + latest + " steps since " + THRESHOLD_TIME_MINUTES + " minute(s)")
-                        .setContentText("MoveIT")
-                                //.setSmallIcon(R.drawable.icon)
-                        .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
-                        .setContentIntent(contentIntent).build();
-
-
-                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                notificationManager.notify(0, notification);
-
-            }
-        } else {
-            notificationSent = false;
-        }
     }
 
     @Override
