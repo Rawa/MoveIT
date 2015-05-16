@@ -6,10 +6,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import gbgsh.moveit.datalayer.Database;
+import gbgsh.moveit.stepcounter.StepCounterManager;
+
 
 public class MainActivity extends Activity implements StepCounterManager.StepListener {
 
     private StepCounterManager mStepCounter;
+    private Database mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +22,9 @@ public class MainActivity extends Activity implements StepCounterManager.StepLis
 
         mStepCounter = new StepCounterManager(this);
         mStepCounter.setStepListener(this);
+
+        mDb = new Database(getApplicationContext());
+        mDb.insert(123);
     }
 
     @Override

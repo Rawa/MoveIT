@@ -1,4 +1,4 @@
-package gbgsh.moveit;
+package gbgsh.moveit.stepcounter;
 
 import android.app.IntentService;
 import android.content.Context;
