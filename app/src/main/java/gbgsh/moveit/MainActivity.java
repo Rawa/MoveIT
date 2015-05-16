@@ -38,12 +38,19 @@ public class MainActivity extends Activity implements Runnable {
     private static final String LOG_TAG = "MainActivity";
     float barLevel = 0f;
     private boolean notificationSent = false;
+    private TextView mNow;
+    private TextView mToday;
+    private TextView mMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        mNow = (TextView) findViewById(R.id.step_now);
+        mToday = (TextView) findViewById(R.id.step_today);
+        mMonth = (TextView) findViewById(R.id.step_month);
 
         Intent mainServiceIntent = new Intent(this, MainService.class);
         this.startService(mainServiceIntent);
@@ -116,6 +123,14 @@ public class MainActivity extends Activity implements Runnable {
 
     public void updateBar() {
         int latest = mDb.getLatestSteps(THRESHOLD_TIME_MINUTES);
+        mNow.setText(latest + " steps");
+
+        int day = mDb.getLatestSteps(24 * 60);
+        mToday.setText(day + " steps");
+
+        int month = mDb.getLatestSteps(30 * 24 * 60);
+        mMonth.setText(month + " steps");
+
         if(latest != oldLatestStep) {
             Log.d(LOG_TAG, "Latest steps: " + latest);
 

@@ -6,37 +6,121 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:background="@drawable/blurry"/>
+        android:src="@drawable/blurry"/>
 
-    <TextView android:id="@+id/step"
-        android:text="@string/hello_world"
-        android:paddingLeft="90dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <gbgsh.moveit.StepBar
-        android:layout_width="80dp"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/stepbar" />
+        android:padding="15dp">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="High1"
-        android:id="@+id/high"
-        android:layout_alignTop="@+id/stepbar"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="49dp"
-        android:layout_marginTop="23dp" />
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Low"
-        android:id="@+id/low"
-        android:layout_below="@+id/high"
-        android:layout_alignStart="@+id/high"
-        android:layout_marginTop="33dp" />
+            <TextView
+                android:text="Statistics"
+                android:textSize="20dp"
+                android:paddingLeft="90dp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="Recent:"
+                    android:paddingLeft="90dp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView android:id="@+id/step_now"
+                    android:text="0 steps"
+                    android:paddingLeft="4dp"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="Today:"
+                    android:paddingLeft="90dp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView android:id="@+id/step_today"
+                    android:text="0 steps"
+                    android:paddingLeft="4dp"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="Month:"
+                    android:paddingLeft="90dp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView android:id="@+id/step_month"
+                    android:text="0 steps"
+                    android:paddingLeft="4dp"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <gbgsh.moveit.StepBar
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:id="@+id/stepbar" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="High1"
+            android:id="@+id/high"
+            android:layout_alignTop="@+id/stepbar"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="49dp"
+            android:layout_marginTop="23dp"
+            android:visibility="invisible"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Low"
+            android:id="@+id/low"
+            android:layout_below="@+id/high"
+            android:layout_alignStart="@+id/high"
+            android:layout_marginTop="33dp"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
