@@ -102,7 +102,6 @@ public class StepBar extends LinearLayout {
         Log.d("TAG", "Red: " + red);
         Log.d("TAG", "Green: " + green);
         Log.d("TAG", "Blue: " + blue);
-
         return Color.rgb(red, green, blue);
         */
 

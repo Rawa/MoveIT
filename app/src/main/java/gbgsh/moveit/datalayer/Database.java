@@ -11,10 +11,19 @@ public class Database {
     private static final String LOG_TAG = "Database";
     private DatabaseHelper dbHelper;
     private SQLiteDatabase database;
+    private Float currentLevel=0.7f;
 
     public Database(Context context){
         dbHelper = new DatabaseHelper(context);
         database = dbHelper.getWritableDatabase();
+    }
+    public float getCurrentLevel(){
+        return currentLevel;
+    }
+    public void setCurrentLevel(Float tmpCurrentLevel){
+        Log.d(LOG_TAG, "setCurrentLevel: " + tmpCurrentLevel);
+        //        Log.d(LOG_TAG, "Level set to: " + level);
+        currentLevel=tmpCurrentLevel;
     }
 
 
@@ -22,6 +31,11 @@ public class Database {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.StepEntry.COLUMN_NAME_COUNT, count);
         values.put(DatabaseHelper.StepEntry.COLUMN_NAME_TIMESTAMP, System.currentTimeMillis());
+
+
+        //add mothly
+        //add to dayly
+
         return database.insert(DatabaseHelper.StepEntry.TABLE_NAME, null, values);
     }
 
