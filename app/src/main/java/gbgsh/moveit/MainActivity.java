@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import gbgsh.moveit.datalayer.Database;
 import gbgsh.moveit.service.MainService;
+import gbgsh.moveit.service.StepCounterService;
 
 
 public class MainActivity extends Activity implements Runnable {
@@ -31,6 +32,8 @@ public class MainActivity extends Activity implements Runnable {
     public static final float NOTIFICATION_THRESHOLD = 0.1f;
 
     private Database mDb;
+    Intent mainServiceIntent;
+    private MainService MainService;
     private StepBar bar;
 
     public Handler handler = new Handler();
@@ -49,23 +52,27 @@ public class MainActivity extends Activity implements Runnable {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        mNow = (TextView) findViewById(R.id.step_now);
-        mToday = (TextView) findViewById(R.id.step_today);
-        mMonth = (TextView) findViewById(R.id.step_month);
+       // mNow = (TextView) findViewById(R.id.step_now);
+       // mToday = (TextView) findViewById(R.id.step_today);
+       // mMonth = (TextView) findViewById(R.id.step_month);
 
-        Intent mainServiceIntent = new Intent(this, MainService.class);
+        mainServiceIntent = new Intent(this, MainService.class);
         this.startService(mainServiceIntent);
 
-        IntentFilter intentFilter = new IntentFilter(MainService.UPDATE);
+       IntentFilter intentFilter = new IntentFilter(MainService.UPDATE);
         this.registerReceiver(new BroadcastReceiver() {
 
             @Override
             public void onReceive(Context context, Intent intent) {
-                updateBar();
+                float level = intent.getExtras().getFloat("level");
+               // Log.d(LOG_TAG, "state: " + state);
+                updateBar(level);
             }
         }, intentFilter);
 
         mDb = new Database(getApplicationContext());
+
+
 
      //   Button high = (Button) findViewById(R.id.high);
      //   Button low = (Button) findViewById(R.id.low);
@@ -117,32 +124,34 @@ public class MainActivity extends Activity implements Runnable {
 
 
 //        handler.postDelayed(this, 0);
-        updateBar();
+      //  updateBar();
     }
 
     @Override
     public void run() {
-        updateBar();
+     //   updateBar();
         handler.postDelayed(this, 1000);
     }
 
-    public void updateBar() {
-        int latest = mDb.getLatestSteps(THRESHOLD_TIME_MINUTES);
-        mNow.setText(latest + " steps");
+    public void updateBar(float level) {
+        // float level = mDb.getCurrentLevel();
+//        mNow.setText(latest + " steps");
 
-        int day = mDb.getLatestSteps(24 * 60);
-        mToday.setText(day + " steps");
+    //    int day = mDb.getLatestSteps(24 * 60);
+     //   mToday.setText(day + " steps");
 
-        int month = mDb.getLatestSteps(30 * 24 * 60);
-        mMonth.setText(month + " steps");
+      //  int month = mDb.getLatestSteps(30 * 24 * 60);
+      //  mMonth.setText(month + " steps");
 
-        float level = Math.min((float)latest / (float) THRESHOLD_MAX_STEPS, 1.0f);
-        if(latest != oldLatestStep) {
-            Log.d(LOG_TAG, "Latest steps: " + latest);
-            Log.d(LOG_TAG, "Level set to: " + level);
+    //    float level = Math.min((float)latest / (float) THRESHOLD_MAX_STEPS, 1.0f);
+    //    if(latest != oldLatestStep) {
+    //        Log.d(LOG_TAG, "Latest steps: " + latest);
+    //        Log.d(LOG_TAG, "Level set to: " + level);
 
-            bar.setBarLevel(level, true);
-        }
+       // float level=0.2f;
+        Log.d(LOG_TAG, "Level set to: " + level);
+        bar.setBarLevel(level, true);
+
 
         Paint paint = new Paint();
         Bitmap bg = Bitmap.createBitmap(240, 800, Bitmap.Config.ARGB_8888);
@@ -152,7 +161,7 @@ public class MainActivity extends Activity implements Runnable {
         LinearLayout ll = (LinearLayout) findViewById(R.id.smily);
         ll.setBackgroundDrawable(new BitmapDrawable(bg));
 
-        oldLatestStep = latest;
+       // oldLatestStep = latest;
     }
 
     @Override

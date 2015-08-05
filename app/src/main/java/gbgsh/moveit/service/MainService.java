@@ -20,6 +20,7 @@ public class MainService extends IntentService implements  Runnable{
     private static final long TIMER_INTERVAL = 1500;
     private Integer mStep = 0;
     private Integer oldStep;
+    private float globalLevel=0.3f;//0..1
     private final Handler mHandler = new Handler();
     private StepCounterService mStepCounterService;
     private Database mDb;
@@ -34,7 +35,7 @@ public class MainService extends IntentService implements  Runnable{
     protected void onHandleIntent(Intent intent) {
         Log.d(LOG_TAG, "MAINSERVICE started");
 
-        mDb = new Database(getApplicationContext());
+         mDb = new Database(getApplicationContext());
 
         mStepCounterService = new StepCounterService(this);
         mStepCounterService.setStepListener(new StepCounterService.StepListener() {
@@ -43,6 +44,9 @@ public class MainService extends IntentService implements  Runnable{
                 mStep = step;
                 if(oldStep == null) {
                     oldStep = mStep;
+                }
+                if(globalLevel<1) {
+                    globalLevel+=0.01;
                 }
             }
         });
@@ -57,34 +61,39 @@ public class MainService extends IntentService implements  Runnable{
     public void update() {
         Intent intent = new Intent();
         intent.setAction(MainService.UPDATE);
+        intent.putExtra("level", globalLevel);
         sendBroadcast(intent);
+      //  mDb.setCurrentLevel(globalLevel);
 
-        int latest = mDb.getLatestSteps(MainActivity.THRESHOLD_TIME_MINUTES);
-        Log.d(LOG_TAG, "Latest steps: " + latest);
+     //   int latest = mDb.getLatestSteps(MainActivity.THRESHOLD_TIME_MINUTES);
+       // Log.d(LOG_TAG, "Latest steps: " + latest);
 
-        float level = Math.min((float)latest / (float) MainActivity.THRESHOLD_MAX_STEPS, 1.0f);
-        Log.d(LOG_TAG, "Level set to: " + level);
-        sendNotification(level, latest);
+       // float level = Math.min((float)latest / (float) MainActivity.THRESHOLD_MAX_STEPS, 1.0f);
+  //      Log.d(LOG_TAG, "Level set to: " + level);
+        sendNotification(globalLevel);
     }
 
     @Override
     public void run() {
-        if(oldStep != null) {
+        /*if(oldStep != null) {
             int numbSteps = mStep - oldStep;
             oldStep = mStep;
 
             if(numbSteps > 0) {
                 int total = mDb.getTotalSteps();
                 Log.d(LOG_TAG, "Steps taken since last time:" + numbSteps + "/" + total);
-                mDb.insert(numbSteps);
-            }
-        }
 
+              //  mDb.insert(numbSteps);
+            }
+        }*/
+        if(globalLevel>0) {
+            globalLevel -= 0.001;
+        }
         update();
         mHandler.postDelayed(this, TIMER_INTERVAL);
     }
 
-    public void sendNotification(float level, int latest) {
+    public void sendNotification(float level) {
         if(level <= MainActivity.NOTIFICATION_THRESHOLD) {
             if(!notificationSent) {
                 notificationSent = true;
