@@ -78,14 +78,18 @@ public class StepBar extends LinearLayout {
 
     private int getBarRandColor(){
         float level = getBarLevel();
-        int green;
-        int red;
-        int blue;
-        int sum = 255;
-        green = 87;
-        blue = ((int)(1-level) * sum)+66;
-        red = (int)(level * sum);
+
+        int red = (int)(51+(level*204));
+        int green = (int)(204-(127*level));
+        int blue = (int)(255-(221*level));
+
+        red = applyRandDiff(red, 10);
+        green = applyRandDiff(green, 5);
+        blue = applyRandDiff(blue, 15);
+
         return Color.rgb(red,green,blue);
+
+        // return Color.rgb((int)(51+(level*204)),(int)(204-(127*level)),(int)(255-(221*level)));
 
         /*
         if(level > .95f){

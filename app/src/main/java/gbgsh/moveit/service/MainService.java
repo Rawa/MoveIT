@@ -46,7 +46,7 @@ public class MainService extends IntentService implements  Runnable{
                     oldStep = mStep;
                 }
                 if(globalLevel<1) {
-                    globalLevel+=0.01;
+                    globalLevel+=0.1;
                 }
             }
         });
@@ -87,7 +87,7 @@ public class MainService extends IntentService implements  Runnable{
             }
         }*/
         if(globalLevel>0) {
-            globalLevel -= 0.001;
+            globalLevel -= 0.05;
         }
         update();
         mHandler.postDelayed(this, TIMER_INTERVAL);
