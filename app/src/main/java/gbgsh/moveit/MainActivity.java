@@ -156,7 +156,7 @@ public class MainActivity extends Activity implements Runnable {
         Paint paint = new Paint();
         Bitmap bg = Bitmap.createBitmap(240, 800, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bg);
-        createSmily(canvas, paint, 0, 110, 5, Math.round(level * 100.0f));
+        createSmily(canvas, paint, 10, 0, 4, Math.round(level * 100.0f));
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.smily);
         ll.setBackgroundDrawable(new BitmapDrawable(bg));
@@ -208,7 +208,7 @@ public class MainActivity extends Activity implements Runnable {
         paint.setColor(getColorByIntesity(happyness));
         canvas.drawCircle((23+x)*scale, (23+y)*scale, 20*scale, paint);
 
-        paint.setColor(Color.BLACK);
+        paint.setColor(Color.WHITE);
         canvas.drawCircle((20+x+10)*scale, (15+y)*scale, 4*scale, paint); //Left eye
         canvas.drawCircle((20+x-5)*scale, (15+y)*scale, 4*scale, paint); //Right eye
         //canvas.drawCircle(31, 15, 3, paint); //Right eye
