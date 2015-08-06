@@ -52,7 +52,7 @@
             android:key="preference_new_message_sunday"
             android:title="@string/pref_title_sunday"
             android:defaultValue="false" />
-
+    <Preference android:layout="@layout/layout_weekday_buttons" android:key="weekday_buttons"></Preference>
 
     <PreferenceCategory
         android:title="@string/pref_time_interval">
