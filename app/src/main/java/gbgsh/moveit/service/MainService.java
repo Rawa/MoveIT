@@ -64,6 +64,7 @@ public class MainService extends IntentService implements  Runnable{
                 float stepUp=0.1f;//0.01f;
                 if(globalLevel+stepUp<1) {
                     globalLevel+=stepUp;
+
                 }
             }
         });
@@ -106,6 +107,7 @@ public class MainService extends IntentService implements  Runnable{
         float stepUp=0.05f;//0.001f;
         if(globalLevel-stepUp>0) {
             globalLevel -= stepUp;
+
         }
         update();
         mHandler.postDelayed(this, TIMER_INTERVAL);
