@@ -24,34 +24,6 @@
 
         </ListPreference>
     </PreferenceCategory>
-        <CheckBoxPreference
-            android:key="preference_new_message_monday"
-            android:title="@string/pref_title_monday"
-            android:defaultValue="true" />
-        <CheckBoxPreference
-            android:key="preference_new_message_tuesday"
-            android:title="@string/pref_title_tuesday"
-            android:defaultValue="true" />
-        <CheckBoxPreference
-            android:key="preference_new_message_wednesday"
-            android:title="@string/pref_title_wednesday"
-            android:defaultValue="true" />
-        <CheckBoxPreference
-            android:key="preference_new_message_thursday"
-            android:title="@string/pref_title_thursday"
-            android:defaultValue="true" />
-        <CheckBoxPreference
-            android:key="preference_new_message_friday"
-            android:title="@string/pref_title_friday"
-            android:defaultValue="true" />
-        <CheckBoxPreference
-            android:key="preference_new_message_saturday"
-            android:title="@string/pref_title_saturday"
-            android:defaultValue="false" />
-        <CheckBoxPreference
-            android:key="preference_new_message_sunday"
-            android:title="@string/pref_title_sunday"
-            android:defaultValue="false" />
     <Preference android:layout="@layout/layout_weekday_buttons" android:key="weekday_buttons"></Preference>
 
     <PreferenceCategory
