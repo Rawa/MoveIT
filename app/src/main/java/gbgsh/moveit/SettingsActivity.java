@@ -88,6 +88,8 @@ public class SettingsActivity extends PreferenceActivity {
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.pref_general);
 
+
+
             // Get widgets :
             toPref = (TimePreference) this.findPreference(TO_KEY);
             fromPref = (TimePreference) this.findPreference(FROM_KEY);
