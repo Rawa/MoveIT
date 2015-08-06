@@ -65,6 +65,11 @@
             android:key="notifications_new_message_flash"
             android:title="@string/pref_title_flash"
             android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="notifications_new_message_notice"
+            android:title="@string/pref_title_notice"
+            android:defaultValue="true" />
     </PreferenceCategory>
 
 </PreferenceScreen>
