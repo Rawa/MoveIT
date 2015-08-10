@@ -24,6 +24,7 @@
 
         </ListPreference>
     </PreferenceCategory>
+    <Preference android:layout="@layout/layout_weekday_buttons" android:key="weekday_buttons"></Preference>
 
     <PreferenceCategory
         android:title="@string/pref_time_interval">

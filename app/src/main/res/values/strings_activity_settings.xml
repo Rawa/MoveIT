@@ -3,6 +3,17 @@
 
     <string name="pref_title_vibrate">Vibrate </string>
     <string name="pref_title_flash">Flash </string>
+
+
+    <string name="pref_title_monday">Monday </string>
+    <string name="pref_title_tuesday">Tuesday </string>
+    <string name="pref_title_wednesday">Wednesday </string>
+    <string name="pref_title_thursday">Thursday </string>
+    <string name="pref_title_friday">Friday </string>
+    <string name="pref_title_saturday">Saturday </string>
+    <string name="pref_title_sunday">Sunday </string>
+
+
     <string name="pref_title_notice">Notice </string>
     <string name="pref_from">From</string>
     <string name="pref_to">To</string>

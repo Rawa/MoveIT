@@ -3,7 +3,9 @@ package gbgsh.moveit;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.content.res.XmlResourceParser;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -18,6 +20,9 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Property;
+import android.view.MenuItem;
+import android.view.View;
 
 
 import java.sql.Time;
@@ -56,6 +61,18 @@ public class SettingsActivity extends PreferenceActivity {
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    public void weekday_toggle(View v){
+        v.setSelected(!v.isSelected());
+    }
 
     public static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
         private TimePreference fromPref;
@@ -89,6 +106,8 @@ public class SettingsActivity extends PreferenceActivity {
             String to = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString(TO_KEY, "17:00");
             toPref.setSummary(this.getString(R.string.pref_to_summary).replace("$1", to));
         }
+
+
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
