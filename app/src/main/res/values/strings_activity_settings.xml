@@ -31,35 +31,31 @@
 
     <string name="pref_title_sendentary_time">Sedentary time before warning</string>
     <string-array name="pref_sendentary_text">
-        <item>30 minutes</item>
-        <item>45 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
+        <item>Testing</item>
+        <item>Fast</item>
+        <item>Normal</item>
+        <item>Slow</item>
     </string-array>
     <string-array name="pref_sendentary_values">
-        <item>30</item>
-        <item>45</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
+        <item>0.01</item>
+        <item>0.005</item>
+        <item>0.001</item>
+        <item>0.0005</item>
     </string-array>
 
     <string name="pref_title_threshold">Step threshold</string>
     <string name="pref_title_step_threshold">Movement threshold</string>
     <string-array name="pref_step_threshold_text">
-        <item>50 steps</item>
-        <item>100 steps</item>
-        <item>200 steps</item>
-        <item>400 steps</item>
-        <item>1000 steps</item>
+        <item>Testing</item>
+        <item>Fast</item>
+        <item>Normal</item>
+        <item>Slow</item>
     </string-array>
     <string-array name="pref_step_threshold_values">
-        <item>30</item>
-        <item>45</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
+        <item>0.1</item>
+        <item>0.05</item>
+        <item>0.01</item>
+        <item>0.005</item>
     </string-array>
 
 
