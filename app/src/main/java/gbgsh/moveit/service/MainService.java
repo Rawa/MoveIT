@@ -121,8 +121,8 @@ public class MainService extends IntentService implements  Runnable{
 
         // Get widgets :
 
-        String toKey=prefs.getString(TO_KEY, "No name defined");
-        String FromKey=prefs.getString(FROM_KEY, "No name defined");
+        String toKey=prefs.getString(TO_KEY, "17:00");
+        String FromKey=prefs.getString(FROM_KEY, "08:00");
         boolean test2=prefs.getBoolean("notifications_new_message_vibrate", false);
         Calendar c = Calendar.getInstance();
 

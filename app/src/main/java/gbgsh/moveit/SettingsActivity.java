@@ -21,8 +21,11 @@ import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Property;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 
 import java.sql.Time;
@@ -40,6 +43,9 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends PreferenceActivity {
+
+
+    private String[] days = {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
 
     private static Context mContext;
 
@@ -59,6 +65,8 @@ public class SettingsActivity extends PreferenceActivity {
 
         // Set the activity's fragment :
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
+
+
     }
 
     @Override
@@ -74,7 +82,7 @@ public class SettingsActivity extends PreferenceActivity {
         v.setSelected(!v.isSelected());
     }
 
-    public static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+    public static class  SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
         private TimePreference fromPref;
         private TimePreference toPref;
         public static final String TO_KEY = "timePrefB_Key";
@@ -87,6 +95,7 @@ public class SettingsActivity extends PreferenceActivity {
 
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.pref_general);
+
 
 
 
@@ -105,8 +114,10 @@ public class SettingsActivity extends PreferenceActivity {
 
             String to = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString(TO_KEY, "17:00");
             toPref.setSummary(this.getString(R.string.pref_to_summary).replace("$1", to));
+
         }
 
+       
 
 
         @Override

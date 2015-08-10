@@ -23,9 +23,9 @@
 
     <string name="alarm_feedback">Alarm feedback</string>
 
-    <string name="pref_from_summary">Starts annoying you at $1</string>
-    <string name="pref_to_summary">Stops annoying you at $1</string>
-    <string name="pref_time_interval">Set the time interval of MoveIT</string>
+    <string name="pref_from_summary">Active from $1</string>
+    <string name="pref_to_summary">Active to $1</string>
+    <string name="pref_time_interval">Set the active time interval</string>
 
     <string name="pref_rest_limit">Sedentary limitations</string>
 

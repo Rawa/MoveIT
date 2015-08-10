@@ -5,7 +5,7 @@
     android:weightSum="7"
     android:baselineAligned="false" android:orientation="horizontal">
     <Button
-        android:text="T"
+        android:text="M"
         android:layout_width="match_parent"
         android:layout_weight="1" android:layout_height="wrap_content"
         android:id="@+id/monday" android:layout_gravity="left"
@@ -14,6 +14,7 @@
         android:onClick="weekday_toggle"
         android:textColor="@drawable/selector_txt"
         android:layout_alignParentLeft="true"
+        android:key="monday"
         />
     <Button android:text="T" android:layout_width="match_parent"
         android:layout_weight="1" android:layout_height="wrap_content"
@@ -23,6 +24,7 @@
         android:onClick="weekday_toggle"
         android:textColor="@drawable/selector_txt"
         android:layout_toRightOf="@+id/monday"
+        android:key="tuesday"
         />
     <Button android:text="W" android:layout_width="match_parent"
         android:layout_weight="1" android:layout_height="wrap_content"
@@ -32,6 +34,7 @@
         android:onClick="weekday_toggle"
         android:textColor="@drawable/selector_txt"
         android:layout_toRightOf="@+id/tuesday"
+        android:key="wednesday"
         />
     <Button android:text="T" android:layout_width="match_parent"
         android:layout_weight="1" android:layout_height="wrap_content"
@@ -41,6 +44,7 @@
         android:onClick="weekday_toggle"
         android:textColor="@drawable/selector_txt"
         android:layout_toRightOf="@+id/wednesday"
+        android:key="thursday"
         />
     <Button android:text="F" android:layout_width="match_parent"
         android:layout_weight="1" android:layout_height="wrap_content"
@@ -50,6 +54,7 @@
         android:onClick="weekday_toggle"
         android:textColor="@drawable/selector_txt"
         android:layout_toRightOf="@+id/thursday"
+        android:key="friday"
         />
     <Button android:text="S" android:layout_width="match_parent"
         android:layout_weight="1" android:layout_height="wrap_content"
@@ -59,6 +64,7 @@
         android:onClick="weekday_toggle"
         android:textColor="@drawable/selector_txt"
         android:layout_toRightOf="@+id/friday"
+        android:key="saturday"
         />
     <Button android:text="S" android:layout_width="match_parent"
         android:layout_weight="1" android:layout_height="wrap_content"
@@ -68,5 +74,6 @@
         android:onClick="weekday_toggle"
         android:textColor="@drawable/selector_txt"
         android:layout_toRightOf="@+id/saturday"
+        android:key="sunday"
         />
 </LinearLayout>
