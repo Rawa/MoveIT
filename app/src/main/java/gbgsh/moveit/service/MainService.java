@@ -14,17 +14,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
-import 	android.preference.PreferenceManager;
-import 	android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.content.SharedPreferences;
 
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
-
 import gbgsh.moveit.MainActivity;
 import gbgsh.moveit.R;
-import gbgsh.moveit.TimePreference;
 import gbgsh.moveit.datalayer.Database;
 
 public class MainService extends IntentService implements  Runnable{
@@ -40,6 +36,7 @@ public class MainService extends IntentService implements  Runnable{
     private StepCounterService mStepCounterService;
     private Database mDb;
     private boolean notificationSent = true;
+
 
     public MainService (){
         super("MainService");
@@ -61,9 +58,21 @@ public class MainService extends IntentService implements  Runnable{
                 if(oldStep == null) {
                     oldStep = mStep;
                 }
-                float stepUp=0.1f;//0.01f;
-                if(globalLevel+stepUp<1) {
-                    globalLevel+=stepUp;
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainService.this);
+                String thresholdString=prefs.getString("threshold", "0");
+
+
+
+
+                Float threshold=Float.parseFloat(thresholdString);
+
+
+
+               // Log.d(LOG_TAG,"Rising whit speed: "+thresholdString);
+
+
+                if(globalLevel+threshold<1) {
+                    globalLevel+=threshold;
 
                 }
             }
@@ -104,9 +113,19 @@ public class MainService extends IntentService implements  Runnable{
               //  mDb.insert(numbSteps);
             }
         }*/
-        float stepUp=0.05f;//0.001f;
-        if(globalLevel-stepUp>0) {
-            globalLevel -= stepUp;
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String sendentaryLimitString=prefs.getString("sendentary_limit", "0");
+
+        Float sendentaryLimit=Float.parseFloat(sendentaryLimitString);
+
+
+      //  Log.d(LOG_TAG, "Lowring whit speed: "+sendentaryLimitString);
+
+
+
+        if(globalLevel-sendentaryLimit>0) {
+            globalLevel -= sendentaryLimit;
 
         }
         update();
@@ -144,6 +163,9 @@ public class MainService extends IntentService implements  Runnable{
         Calendar c = Calendar.getInstance();
 
         int DayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+
+        console.log(DayOfWeek);
+
 
         return true;
     }
