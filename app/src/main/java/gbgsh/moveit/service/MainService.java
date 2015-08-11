@@ -6,22 +6,18 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Camera;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.util.Log;
 import android.preference.PreferenceManager;
-import android.content.SharedPreferences;
-
+import android.util.Log;
 
 import java.util.Calendar;
-
 import java.util.HashSet;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
