@@ -24,6 +24,7 @@ import android.util.Property;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 
@@ -46,6 +47,9 @@ import java.util.TimerTask;
  */
 public class SettingsActivity extends PreferenceActivity {
 
+
+    private String[] days = {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
+
     private static Context mContext;
 
     public static Context getContext(){
@@ -66,12 +70,6 @@ public class SettingsActivity extends PreferenceActivity {
 
 
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
-       // Button myButton = (Button) getListView().findViewById(R.id.wednesday);
-       // myButton.setSelected(true);
-
-
-
-
 
 
     }
@@ -94,7 +92,7 @@ public class SettingsActivity extends PreferenceActivity {
         monday.setSelected(true);
     }
 
-    public static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+    public static class  SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
         private TimePreference fromPref;
         private TimePreference toPref;
         public static final String TO_KEY = "timePrefB_Key";
@@ -107,6 +105,7 @@ public class SettingsActivity extends PreferenceActivity {
 
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.pref_general);
+
 
 
 
@@ -129,21 +128,9 @@ public class SettingsActivity extends PreferenceActivity {
             toPref.setSummary(this.getString(R.string.pref_to_summary).replace("$1", to));
 
 
-
-
-           // View test =  getView().findViewById(R.id.checkboxTest);
-
-            //test.findViewById(R.id.wednesday).setSelected(true);
-
-
         }
-       /* @Override
-        public void onResume() {
-            final Button monday = (Button)  getView().findViewById(R.id.wednesday);
-            monday.setSelected(true);
-        }*/
 
-
+       
 
 
         @Override

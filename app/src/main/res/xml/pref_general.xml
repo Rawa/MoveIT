@@ -1,7 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:title="@string/pref_rest_limit">
+
         <ListPreference
             android:key="sendentary_limit"
             android:title="@string/pref_title_sendentary_time"
@@ -21,6 +20,7 @@
             android:negativeButtonText="@null"
             android:positiveButtonText="@null" >
         </ListPreference>
+
         <ListPreference
             android:key="repeat_alarm"
             android:title="@string/pref_title_repeat_alarm"
@@ -31,8 +31,9 @@
             android:positiveButtonText="@null" >
         </ListPreference>
 
-    </PreferenceCategory>
-    <Preference android:layout="@layout/layout_weekday_buttons" android:key="weekday_buttons"></Preference>
+
+
+
 
     <PreferenceCategory
         android:title="@string/pref_time_interval">

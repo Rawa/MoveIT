@@ -145,8 +145,8 @@ public class MainService extends IntentService implements  Runnable{
 
         // Get widgets :
 
-        String toKey=prefs.getString(TO_KEY, "No name defined");
-        String FromKey=prefs.getString(FROM_KEY, "No name defined");
+        String toKey=prefs.getString(TO_KEY, "17:00");
+        String FromKey=prefs.getString(FROM_KEY, "08:00");
         boolean test2=prefs.getBoolean("notifications_new_message_vibrate", false);
         Calendar c = Calendar.getInstance();
 
@@ -218,7 +218,13 @@ public class MainService extends IntentService implements  Runnable{
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent contentI       /* @Override
+        public void onResume() {
+            final Button monday = (Button)  getView().findViewById(R.id.wednesday);
+            monday.setSelected(true);
+        }*/
+
+ntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
 
