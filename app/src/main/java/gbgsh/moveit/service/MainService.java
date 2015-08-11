@@ -44,6 +44,8 @@ public class MainService extends IntentService implements  Runnable{
     private boolean notificationSent = true;
     Camera camera = Camera.open();
     Camera.Parameters p = camera.getParameters();
+    private String[] daysArr = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+    private SharedPreferences prefs;
 
 
     public MainService (){
@@ -66,7 +68,6 @@ public class MainService extends IntentService implements  Runnable{
                 if(oldStep == null) {
                     oldStep = mStep;
                 }
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainService.this);
                 String thresholdString=prefs.getString("threshold", "0");
 
 
@@ -122,7 +123,7 @@ public class MainService extends IntentService implements  Runnable{
             }
         }*/
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(MainService.this);
         String sendentaryLimitString=prefs.getString("sendentary_limit", "0");
 
         Float sendentaryLimit=Float.parseFloat(sendentaryLimitString);
@@ -144,7 +145,7 @@ public class MainService extends IntentService implements  Runnable{
        final String TO_KEY = "timePrefB_Key";
        final String FROM_KEY = "timePrefA_Key";
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
 
         // Get widgets :
 
@@ -164,21 +165,34 @@ public class MainService extends IntentService implements  Runnable{
 
     private boolean isItCorrectDay(){
         Calendar c = Calendar.getInstance();
-        int DayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        HashSet<String> days = new HashSet<String>();
-        days = (HashSet<String>) prefs.getStringSet("multi_weekdays", days);
-        Log.d("WOOOOOOOOOOOOOOOOOOOO", days.toString());
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 
-        return true;
+
+
+        HashSet<String> days1 = new HashSet<String>();
+        days1.add("Monday");
+        days1.add("Tuesday");
+        days1.add("Wednesday");
+        days1.add("Thursday");
+        days1.add("Friday");
+        HashSet<String> days = (HashSet<String>) prefs.getStringSet("multi_weekdays_key", days1);
+
+        String today = daysArr[dayOfWeek-1];
+
+        if(days.contains(today)){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
 
     public void checkForNotification(float level) {
+        Log.d("test", "test");
         if(isItRigthTime()&&isItCorrectDay()) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
             int alarmRepeat=Integer.parseInt(prefs.getString("repeat_alarm", "0"));
             Timer timer = new Timer();
             if (level <= MainActivity.NOTIFICATION_THRESHOLD) {
@@ -212,7 +226,7 @@ public class MainService extends IntentService implements  Runnable{
 
     }
     public void sendNotification(){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         boolean vibrate=prefs.getBoolean("notifications_new_message_vibrate", false);
         boolean flash=prefs.getBoolean("notifications_new_message_flash", false);
         boolean notice=prefs.getBoolean("notifications_new_message_notice", false);

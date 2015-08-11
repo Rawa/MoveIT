@@ -38,7 +38,7 @@
         android:title="@string/pref_active_days"
         android:entries="@array/pref_weekdays"
         android:entryValues="@array/pref_weekdays_values"
-        android:defaultValue="@array/empty_array"
+        android:defaultValue="@array/default_days"
         />
 
 
