@@ -14,15 +14,12 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import gbgsh.moveit.datalayer.Database;
 import gbgsh.moveit.service.MainService;
-import gbgsh.moveit.service.StepCounterService;
 
 
 public class MainActivity extends Activity implements Runnable {
@@ -31,7 +28,6 @@ public class MainActivity extends Activity implements Runnable {
     public static final int THRESHOLD_MAX_STEPS = 100;
     public static final float NOTIFICATION_THRESHOLD = 0.1f;
 
-    private Database mDb;
     Intent mainServiceIntent;
     private MainService MainService;
     private StepBar bar;
@@ -70,7 +66,7 @@ public class MainActivity extends Activity implements Runnable {
             }
         }, intentFilter);
 
-        mDb = new Database(getApplicationContext());
+       
 
 
 

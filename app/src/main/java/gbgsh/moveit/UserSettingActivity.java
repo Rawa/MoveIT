@@ -1,9 +1,7 @@
 package gbgsh.moveit;
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.preference.PreferenceActivity;
-        import android.view.Menu;
-        import android.view.MenuItem;
+
+import android.os.Bundle;
+import android.preference.PreferenceActivity;
 
 public class UserSettingActivity extends PreferenceActivity {
 
