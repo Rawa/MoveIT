@@ -51,6 +51,7 @@ public class MainService extends IntentService implements  Runnable{
     protected void onHandleIntent(Intent intent) {
 
         Log.d(LOG_TAG, "MAINSERVICE started");
+        prefs = PreferenceManager.getDefaultSharedPreferences(MainService.this);
 
         mStepCounterService = new StepCounterService(this);
         mStepCounterService.setStepListener(new StepCounterService.StepListener() {
