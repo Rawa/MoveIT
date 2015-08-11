@@ -138,8 +138,7 @@ public class SettingsActivity extends PreferenceActivity {
                 toPref.setSummary(this.getString(R.string.pref_to_summary).replace("$1",to_time));
 
             }
-            final Button monday = (Button)  getView().findViewById(R.id.wednesday);
-            monday.setSelected(true);
+
         }
     }
 }
