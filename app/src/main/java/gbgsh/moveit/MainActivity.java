@@ -131,6 +131,7 @@ public class MainActivity extends Activity implements Runnable {
     public void run() {
      //   updateBar();
         handler.postDelayed(this, 1000);
+
     }
 
     public void updateBar(float level) {

@@ -45,7 +45,7 @@ import java.util.List;
 public class SettingsActivity extends PreferenceActivity {
 
 
-    private String[] days = {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
+
 
     private static Context mContext;
 
@@ -80,6 +80,8 @@ public class SettingsActivity extends PreferenceActivity {
     }
     public void weekday_toggle(View v){
         v.setSelected(!v.isSelected());
+
+
     }
 
     public static class  SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -87,6 +89,7 @@ public class SettingsActivity extends PreferenceActivity {
         private TimePreference toPref;
         public static final String TO_KEY = "timePrefB_Key";
         public static final String FROM_KEY = "timePrefA_Key";
+        private String[] days = {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -117,7 +120,6 @@ public class SettingsActivity extends PreferenceActivity {
 
         }
 
-       
 
 
         @Override

@@ -10,6 +10,19 @@
         <item name="android:colorAccent">@color/accent</item>
         <item name="android:textColorPrimary">@color/accent</item>
         <item name="android:statusBarColor">@color/accent</item>
+        <item name="android:alertDialogTheme">@style/DialogStyle</item>
 
    </style>
+    <style name="DialogStyle" parent="android:Theme.Material.Dialog.Alert">
+        <!-- Main theme colors -->
+        <!--   your app branding color for the app bar -->
+        <item name="android:colorPrimary">@color/primary</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:textColorPrimary">@color/accent</item>
+        <item name="android:statusBarColor">@color/accent</item>
+    </style>
 </resources>
+

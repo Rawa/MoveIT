@@ -19,6 +19,9 @@ import android.content.SharedPreferences;
 
 
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+
 import gbgsh.moveit.MainActivity;
 import gbgsh.moveit.R;
 import gbgsh.moveit.datalayer.Database;
@@ -160,11 +163,17 @@ public class MainService extends IntentService implements  Runnable{
 
 
     private boolean isItCorrectDay(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        HashSet<String> days = new HashSet<String>();
+        days = (HashSet<String>) prefs.getStringSet("multi_weekdays", days);
+        Log.d("WOOOOOOOOOOOOOOOOOOOO", days.toString());
         Calendar c = Calendar.getInstance();
 
         int DayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 
-        console.log(DayOfWeek);
+
+        Log.d("OOO", ""+DayOfWeek);
 
 
         return true;

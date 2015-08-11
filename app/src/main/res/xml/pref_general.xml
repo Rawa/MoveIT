@@ -22,11 +22,15 @@
             android:positiveButtonText="@null" >
 
         </ListPreference>
-
-    <PreferenceCategory android:title="Active days">
-        <Preference android:layout="@layout/layout_weekday_buttons" android:key="weekday_buttons"></Preference>
-    </PreferenceCategory>
-
+    <MultiSelectListPreference
+        android:dialogTitle="@string/pref_active_days"
+        android:key="@string/multi_weekdays_key"
+        android:summary=""
+        android:title="@string/pref_active_days"
+        android:entries="@array/pref_weekdays"
+        android:entryValues="@array/pref_weekdays_values"
+        android:defaultValue="@array/empty_array"
+        />
 
     <PreferenceCategory
         android:title="@string/pref_time_interval">
