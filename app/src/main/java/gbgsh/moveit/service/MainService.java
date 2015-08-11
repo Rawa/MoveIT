@@ -6,28 +6,23 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Camera;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.util.Log;
 import android.preference.PreferenceManager;
-import android.content.SharedPreferences;
-
+import android.util.Log;
 
 import java.util.Calendar;
-
 import java.util.HashSet;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
 import gbgsh.moveit.MainActivity;
 import gbgsh.moveit.R;
-import gbgsh.moveit.datalayer.Database;
 
 public class MainService extends IntentService implements  Runnable{
 
@@ -40,7 +35,6 @@ public class MainService extends IntentService implements  Runnable{
     private float globalLevel=0.3f;//0..1
     private final Handler mHandler = new Handler();
     private StepCounterService mStepCounterService;
-    private Database mDb;
     private boolean notificationSent = true;
     Camera camera = Camera.open();
     Camera.Parameters p = camera.getParameters();
@@ -58,8 +52,6 @@ public class MainService extends IntentService implements  Runnable{
 
         Log.d(LOG_TAG, "MAINSERVICE started");
 
-       //  mDb = new Database(getApplicationContext());
-
         mStepCounterService = new StepCounterService(this);
         mStepCounterService.setStepListener(new StepCounterService.StepListener() {
             @Override
@@ -69,17 +61,7 @@ public class MainService extends IntentService implements  Runnable{
                     oldStep = mStep;
                 }
                 String thresholdString=prefs.getString("threshold", "0");
-
-
-
-
                 Float threshold=Float.parseFloat(thresholdString);
-
-
-
-               // Log.d(LOG_TAG,"Rising whit speed: "+thresholdString);
-
-
                 if(globalLevel+threshold<1) {
                     globalLevel+=threshold;
 
@@ -99,39 +81,15 @@ public class MainService extends IntentService implements  Runnable{
         intent.setAction(MainService.UPDATE);
         intent.putExtra("level", globalLevel);
         sendBroadcast(intent);
-      //  mDb.setCurrentLevel(globalLevel);
-
-     //   int latest = mDb.getLatestSteps(MainActivity.THRESHOLD_TIME_MINUTES);
-       // Log.d(LOG_TAG, "Latest steps: " + latest);
-
-       // float level = Math.min((float)latest / (float) MainActivity.THRESHOLD_MAX_STEPS, 1.0f);
-  //      Log.d(LOG_TAG, "Level set to: " + level);
         checkForNotification(globalLevel);
     }
 
     @Override
     public void run() {
-        /*if(oldStep != null) {
-            int numbSteps = mStep - oldStep;
-            oldStep = mStep;
-
-            if(numbSteps > 0) {
-                int total = mDb.getTotalSteps();
-                Log.d(LOG_TAG, "Steps taken since last time:" + numbSteps + "/" + total);
-
-              //  mDb.insert(numbSteps);
-            }
-        }*/
-
         prefs = PreferenceManager.getDefaultSharedPreferences(MainService.this);
         String sendentaryLimitString=prefs.getString("sendentary_limit", "0");
 
         Float sendentaryLimit=Float.parseFloat(sendentaryLimitString);
-
-
-      //  Log.d(LOG_TAG, "Lowring whit speed: "+sendentaryLimitString);
-
-
 
         if(globalLevel-sendentaryLimit>0) {
             globalLevel -= sendentaryLimit;
@@ -144,8 +102,6 @@ public class MainService extends IntentService implements  Runnable{
     private boolean isItRigthTime(){
        final String TO_KEY = "timePrefB_Key";
        final String FROM_KEY = "timePrefA_Key";
-
-
 
         // Get widgets :
 
@@ -168,8 +124,6 @@ public class MainService extends IntentService implements  Runnable{
 
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 
-
-
         HashSet<String> days1 = new HashSet<String>();
         days1.add("Monday");
         days1.add("Tuesday");
@@ -180,17 +134,10 @@ public class MainService extends IntentService implements  Runnable{
 
         String today = daysArr[dayOfWeek-1];
 
-        if(days.contains(today)){
-            return true;
-        } else {
-            return false;
-        }
+        return days.contains(today);
     }
 
-
-
     public void checkForNotification(float level) {
-        Log.d("test", "test");
         if(isItRigthTime()&&isItCorrectDay()) {
 
             int alarmRepeat=Integer.parseInt(prefs.getString("repeat_alarm", "0"));
@@ -214,11 +161,8 @@ public class MainService extends IntentService implements  Runnable{
 
                         }, 0, alarmRepeat * 1000);
                     }
-                    //sendNotification();
                 }
             } else {
-                Log.d(LOG_TAG, "turn off timmer");
-              //  timer.cancel();
                 notificationSent = false;
             }
 
@@ -235,20 +179,15 @@ public class MainService extends IntentService implements  Runnable{
         if(notice) {
             Log.d(LOG_TAG, "Sending notification");
 
-
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-
-
             Notification notification = new Notification.Builder(this)
                     .setContentTitle("You have to move it!")
                     .setContentText("MoveIT")
                     .setSmallIcon(R.drawable.ic_stat_movieit_icon)
-                            // .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
                     .setAutoCancel(true)
                     .setContentIntent(contentIntent).build();
 
