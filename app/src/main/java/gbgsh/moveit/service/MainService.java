@@ -23,7 +23,6 @@ import java.util.TimerTask;
 
 import gbgsh.moveit.MainActivity;
 import gbgsh.moveit.R;
-import gbgsh.moveit.datalayer.Database;
 
 public class MainService extends IntentService implements  Runnable{
 
@@ -36,10 +35,11 @@ public class MainService extends IntentService implements  Runnable{
     private float globalLevel=0.3f;//0..1
     private final Handler mHandler = new Handler();
     private StepCounterService mStepCounterService;
-    private Database mDb;
     private boolean notificationSent = true;
     Camera camera = Camera.open();
     Camera.Parameters p = camera.getParameters();
+    private String[] daysArr = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+    private SharedPreferences prefs;
 
 
     public MainService (){
@@ -52,8 +52,6 @@ public class MainService extends IntentService implements  Runnable{
 
         Log.d(LOG_TAG, "MAINSERVICE started");
 
-       //  mDb = new Database(getApplicationContext());
-
         mStepCounterService = new StepCounterService(this);
         mStepCounterService.setStepListener(new StepCounterService.StepListener() {
             @Override
@@ -62,19 +60,8 @@ public class MainService extends IntentService implements  Runnable{
                 if(oldStep == null) {
                     oldStep = mStep;
                 }
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainService.this);
                 String thresholdString=prefs.getString("threshold", "0");
-
-
-
-
                 Float threshold=Float.parseFloat(thresholdString);
-
-
-
-               // Log.d(LOG_TAG,"Rising whit speed: "+thresholdString);
-
-
                 if(globalLevel+threshold<1) {
                     globalLevel+=threshold;
 
@@ -94,39 +81,15 @@ public class MainService extends IntentService implements  Runnable{
         intent.setAction(MainService.UPDATE);
         intent.putExtra("level", globalLevel);
         sendBroadcast(intent);
-      //  mDb.setCurrentLevel(globalLevel);
-
-     //   int latest = mDb.getLatestSteps(MainActivity.THRESHOLD_TIME_MINUTES);
-       // Log.d(LOG_TAG, "Latest steps: " + latest);
-
-       // float level = Math.min((float)latest / (float) MainActivity.THRESHOLD_MAX_STEPS, 1.0f);
-  //      Log.d(LOG_TAG, "Level set to: " + level);
         checkForNotification(globalLevel);
     }
 
     @Override
     public void run() {
-        /*if(oldStep != null) {
-            int numbSteps = mStep - oldStep;
-            oldStep = mStep;
-
-            if(numbSteps > 0) {
-                int total = mDb.getTotalSteps();
-                Log.d(LOG_TAG, "Steps taken since last time:" + numbSteps + "/" + total);
-
-              //  mDb.insert(numbSteps);
-            }
-        }*/
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(MainService.this);
         String sendentaryLimitString=prefs.getString("sendentary_limit", "0");
 
         Float sendentaryLimit=Float.parseFloat(sendentaryLimitString);
-
-
-      //  Log.d(LOG_TAG, "Lowring whit speed: "+sendentaryLimitString);
-
-
 
         if(globalLevel-sendentaryLimit>0) {
             globalLevel -= sendentaryLimit;
@@ -139,8 +102,6 @@ public class MainService extends IntentService implements  Runnable{
     private boolean isItRigthTime(){
        final String TO_KEY = "timePrefB_Key";
        final String FROM_KEY = "timePrefA_Key";
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         // Get widgets :
 
@@ -160,21 +121,25 @@ public class MainService extends IntentService implements  Runnable{
 
     private boolean isItCorrectDay(){
         Calendar c = Calendar.getInstance();
-        int DayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        HashSet<String> days = new HashSet<String>();
-        days = (HashSet<String>) prefs.getStringSet("multi_weekdays", days);
-        Log.d("WOOOOOOOOOOOOOOOOOOOO", days.toString());
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 
-        return true;
+        HashSet<String> days1 = new HashSet<String>();
+        days1.add("Monday");
+        days1.add("Tuesday");
+        days1.add("Wednesday");
+        days1.add("Thursday");
+        days1.add("Friday");
+        HashSet<String> days = (HashSet<String>) prefs.getStringSet("multi_weekdays_key", days1);
+
+        String today = daysArr[dayOfWeek-1];
+
+        return days.contains(today);
     }
-
-
 
     public void checkForNotification(float level) {
         if(isItRigthTime()&&isItCorrectDay()) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
             int alarmRepeat=Integer.parseInt(prefs.getString("repeat_alarm", "0"));
             Timer timer = new Timer();
             if (level <= MainActivity.NOTIFICATION_THRESHOLD) {
@@ -196,11 +161,8 @@ public class MainService extends IntentService implements  Runnable{
 
                         }, 0, alarmRepeat * 1000);
                     }
-                    //sendNotification();
                 }
             } else {
-                Log.d(LOG_TAG, "turn off timmer");
-              //  timer.cancel();
                 notificationSent = false;
             }
 
@@ -208,7 +170,7 @@ public class MainService extends IntentService implements  Runnable{
 
     }
     public void sendNotification(){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         boolean vibrate=prefs.getBoolean("notifications_new_message_vibrate", false);
         boolean flash=prefs.getBoolean("notifications_new_message_flash", false);
         boolean notice=prefs.getBoolean("notifications_new_message_notice", false);
@@ -217,20 +179,15 @@ public class MainService extends IntentService implements  Runnable{
         if(notice) {
             Log.d(LOG_TAG, "Sending notification");
 
-
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-
-
             Notification notification = new Notification.Builder(this)
                     .setContentTitle("You have to move it!")
                     .setContentText("MoveIT")
                     .setSmallIcon(R.drawable.ic_stat_movieit_icon)
-                            // .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
                     .setAutoCancel(true)
                     .setContentIntent(contentIntent).build();
 
