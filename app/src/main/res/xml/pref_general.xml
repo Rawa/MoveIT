@@ -6,10 +6,9 @@
             android:title="@string/pref_title_sendentary_time"
             android:entries="@array/pref_sendentary_text"
             android:entryValues="@array/pref_sendentary_values"
-            android:defaultValue="180"
+            android:defaultValue="0.001"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null" >
-
         </ListPreference>
 
         <ListPreference
@@ -17,11 +16,21 @@
             android:title="@string/pref_title_step_threshold"
             android:entries="@array/pref_step_threshold_text"
             android:entryValues="@array/pref_step_threshold_values"
-            android:defaultValue="180"
+            android:defaultValue="0.01"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null" >
-
         </ListPreference>
+
+        <ListPreference
+            android:key="repeat_alarm"
+            android:title="@string/pref_title_repeat_alarm"
+            android:entries="@array/pref_repeat_alarm_text"
+            android:entryValues="@array/pref_repeat_alarm_values"
+            android:defaultValue="0"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null" >
+        </ListPreference>
+
     <MultiSelectListPreference
         android:dialogTitle="@string/pref_active_days"
         android:key="@string/multi_weekdays_key"
@@ -31,6 +40,7 @@
         android:entryValues="@array/pref_weekdays_values"
         android:defaultValue="@array/empty_array"
         />
+
 
     <PreferenceCategory
         android:title="@string/pref_time_interval">
@@ -48,6 +58,7 @@
     <PreferenceCategory
         android:title="@string/alarm_feedback">
         <CheckBoxPreference
+            android:id="@+id/checkboxTest"
             android:key="notifications_new_message"
             android:title="@string/pref_title_new_message_notifications"
             android:defaultValue="true" />

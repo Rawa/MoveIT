@@ -30,6 +30,9 @@ import android.widget.Button;
 
 import java.sql.Time;
 import java.util.List;
+import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -63,13 +66,18 @@ public class SettingsActivity extends PreferenceActivity {
         // Call super :
         super.onCreate(savedInstanceState);
 
-        // Set the activity's fragment :
+
+
+
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
 
 
     }
 
-    @Override
+
+
+
+        @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -77,11 +85,6 @@ public class SettingsActivity extends PreferenceActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-    public void weekday_toggle(View v){
-        v.setSelected(!v.isSelected());
-
-
     }
 
     public static class  SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -112,11 +115,14 @@ public class SettingsActivity extends PreferenceActivity {
             // Set seekbar summary :
 
 
+
+
             String from = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString(FROM_KEY, "08:00");
             fromPref.setSummary(this.getString(R.string.pref_from_summary).replace("$1", from));
 
             String to = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString(TO_KEY, "17:00");
             toPref.setSummary(this.getString(R.string.pref_to_summary).replace("$1", to));
+
 
         }
 
@@ -132,6 +138,8 @@ public class SettingsActivity extends PreferenceActivity {
                 toPref.setSummary(this.getString(R.string.pref_to_summary).replace("$1",to_time));
 
             }
+            final Button monday = (Button)  getView().findViewById(R.id.wednesday);
+            monday.setSelected(true);
         }
     }
 }

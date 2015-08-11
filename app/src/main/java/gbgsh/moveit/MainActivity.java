@@ -150,7 +150,7 @@ public class MainActivity extends Activity implements Runnable {
     //        Log.d(LOG_TAG, "Level set to: " + level);
 
        // float level=0.2f;
-        Log.d(LOG_TAG, "Level set to: " + level);
+
         bar.setBarLevel(level, true);
 
 
