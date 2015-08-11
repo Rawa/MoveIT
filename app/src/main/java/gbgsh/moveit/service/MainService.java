@@ -19,6 +19,9 @@ import android.content.SharedPreferences;
 
 
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import gbgsh.moveit.MainActivity;
 import gbgsh.moveit.R;
 import gbgsh.moveit.datalayer.Database;
@@ -36,6 +39,8 @@ public class MainService extends IntentService implements  Runnable{
     private StepCounterService mStepCounterService;
     private Database mDb;
     private boolean notificationSent = true;
+    Camera camera = Camera.open();
+    Camera.Parameters p = camera.getParameters();
 
 
     public MainService (){
@@ -150,23 +155,13 @@ public class MainService extends IntentService implements  Runnable{
         int currentTimeInMinutes=hour*60+Curreminute;
         int maxValue=Integer.parseInt(toKey.split(":")[0]) *60+Integer.parseInt(toKey.split(":")[1]);
         int minValue=Integer.parseInt(FromKey.split(":")[0])*60+Integer.parseInt(FromKey.split(":")[1]);
-        Log.d(LOG_TAG,"min:"+minValue+" max:"+maxValue+" current:"+currentTimeInMinutes);
         return currentTimeInMinutes>minValue&&currentTimeInMinutes<maxValue;
 
     }
 
-
-
-
-
     private boolean isItCorrectDay(){
         Calendar c = Calendar.getInstance();
-
         int DayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-
-        console.log(DayOfWeek);
-
-
         return true;
     }
 
@@ -175,79 +170,109 @@ public class MainService extends IntentService implements  Runnable{
     public void sendNotification(float level) {
         if(isItRigthTime()&&isItCorrectDay()) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            boolean vibrate=prefs.getBoolean("notifications_new_message_vibrate", false);
-            boolean flash=prefs.getBoolean("notifications_new_message_flash", false);
-            boolean notice=prefs.getBoolean("notifications_new_message_notice", false);
-            boolean ringtone=prefs.getBoolean("notifications_new_message", false);
+
+            int alarmRepeat=Integer.parseInt(prefs.getString("repeat_alarm", "0"));
+
+            Timer timer = new Timer();
+
+            if (level <= MainActivity.NOTIFICATION_THRESHOLD) {
+
+                if (!notificationSent) {
+                    notificationSent = true;
+
+
+                    if(alarmRepeat!=0) {
+                        Log.d(LOG_TAG, "Start Timmer");
+                        timer.scheduleAtFixedRate(new TimerTask() {
+                            @Override
+                            public void run() {
+                                Log.d(LOG_TAG, "timmer timed out");
+                                sendNotification();
+
+                            }
+
+                        }, 0, alarmRepeat * 1000);
+                    }
+                    //sendNotification();
+                }
+            } else {
+                Log.d(LOG_TAG, "turn off timmer");
+              //  timer.cancel();
+                notificationSent = false;
+            }
+
+        }
+
+    }
+    public void sendNotification(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean vibrate=prefs.getBoolean("notifications_new_message_vibrate", false);
+        boolean flash=prefs.getBoolean("notifications_new_message_flash", false);
+        boolean notice=prefs.getBoolean("notifications_new_message_notice", false);
+        boolean ringtone=prefs.getBoolean("notifications_new_message", false);
+
+        if(notice) {
+            Log.d(LOG_TAG, "Sending notification");
+
+
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-                if (level <= MainActivity.NOTIFICATION_THRESHOLD) {
-                    if (!notificationSent) {
-                        notificationSent = true;
-                        if(notice) {
-                            Log.d(LOG_TAG, "Sending notification");
 
 
-                            Notification notification = new Notification.Builder(this)
-                                    .setContentTitle("You have to move it!")
-                                    .setContentText("MoveIT")
-                                    .setSmallIcon(R.drawable.ic_stat_movieit_icon)
-                                            // .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
-                                    .setAutoCancel(true)
-                                    .setContentIntent(contentIntent).build();
+            Notification notification = new Notification.Builder(this)
+                    .setContentTitle("You have to move it!")
+                    .setContentText("MoveIT")
+                    .setSmallIcon(R.drawable.ic_stat_movieit_icon)
+                            // .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
+                    .setAutoCancel(true)
+                    .setContentIntent(contentIntent).build();
 
 
-                            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                            notificationManager.notify(0, notification);
-                        }
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.notify(0, notification);
 
-                        if(vibrate){
-                            if (level <= MainActivity.NOTIFICATION_THRESHOLD) {
-                                // Get instance of Vibrator from current Context
-                                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                                // Vibrate for 400 milliseconds
-                                v.vibrate(400);
-                            }
-                        }
-                        if(ringtone){
-                            try {
-                                String ringtoneSong=prefs.getString("notifications_new_message_ringtone", "Cant find");
-                                Uri myUri = Uri.parse(ringtoneSong);
-                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), myUri);
-                                r.play();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        if (flash) {
-                            try {
-                                Camera camera = Camera.open();
-                                Camera.Parameters p = camera.getParameters();
-                                p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                                camera.setParameters(p);
-                                camera.startPreview();
+        }
 
-                                Thread.sleep(500);
+        if(vibrate){
+            // Get instance of Vibrator from current Context
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            // Vibrate for 400 milliseconds
+            v.vibrate(400);
+
+        }
+        if(ringtone){
+
+            try {
+                String ringtoneSong=prefs.getString("notifications_new_message_ringtone", "Cant find");
+                Uri myUri = Uri.parse(ringtoneSong);
+                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), myUri);
+                r.play();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+        if (flash) {
+
+            try {
+
+                p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                camera.setParameters(p);
+                camera.startPreview();
+
+                Thread.sleep(500);
 
 
-                                p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                                camera.setParameters(p);
-                                camera.stopPreview();
-                                } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-
-                    }
-                } else {
-                    notificationSent = false;
-                }
-
+                p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                camera.setParameters(p);
+                camera.stopPreview();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

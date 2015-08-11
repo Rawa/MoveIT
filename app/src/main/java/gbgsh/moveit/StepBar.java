@@ -72,7 +72,6 @@ public class StepBar extends LinearLayout {
         color += getRandDiff(diff);
         color = Math.min(255, color);
         color = Math.max(0, color);
-        Log.d("COLOR", color + "");
         return color;
     }
 
@@ -153,7 +152,7 @@ public class StepBar extends LinearLayout {
                 anim.start();
             }
         };
-        Log.d("Derpy", "Starting animation");
+       // Log.d("Derpy", "Starting animation");
         post(runnable);
     }
 

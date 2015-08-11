@@ -4,11 +4,14 @@
     android:layout_width="fill_parent"
     android:weightSum="7"
     android:baselineAligned="false" android:orientation="horizontal">
-    <Button
-        android:text="T"
+    <CheckBox
+        android:key="test"
+        android:text="M"
+        android:checked="@bool/test"
         android:layout_width="match_parent"
         android:layout_weight="1" android:layout_height="wrap_content"
         android:id="@+id/monday" android:layout_gravity="left"
+        android:button="@android:drawable/btn_default"
         android:minHeight="0dp"
         android:minWidth="0dp"
         android:onClick="weekday_toggle"
@@ -17,6 +20,9 @@
         />
     <Button android:text="T" android:layout_width="match_parent"
         android:layout_weight="1" android:layout_height="wrap_content"
+        android:checked="true"
+        android:state_pressed="true"
+
         android:id="@+id/tuesday"
         android:minHeight="0dp"
         android:minWidth="0dp"
@@ -28,7 +34,10 @@
         android:layout_weight="1" android:layout_height="wrap_content"
         android:id="@+id/wednesday"
         android:minHeight="0dp"
+        android:state_selected="true"
         android:minWidth="0dp"
+        android:checked="true"
+
         android:onClick="weekday_toggle"
         android:textColor="@drawable/selector_txt"
         android:layout_toRightOf="@+id/tuesday"
